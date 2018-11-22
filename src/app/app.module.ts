@@ -53,6 +53,7 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import {AppRoutingModule} from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { FooterComponent } from './footer/footer.component';
     UserFormComponent,
     UserListComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
