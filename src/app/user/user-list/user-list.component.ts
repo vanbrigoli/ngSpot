@@ -3,18 +3,29 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material';
 
 export interface User {
-  position: number;
   firstname: string;
   lastname: string;
 }
 
 const USER_DATA: User[] = [
-  {position: 1, firstname: 'Giovanni', lastname: 'Brigoli'},
-  {position: 2, firstname: 'Helium', lastname: 'Brigoli'},
-  {position: 3, firstname: 'Lithium', lastname: 'Brigoli'},
-  {position: 4, firstname: 'Beryllium', lastname: 'Brigoli'},
-  {position: 1, firstname: 'Giovanni', lastname: 'Brigoli'},
-  {position: 2, firstname: 'Helium', lastname: 'Brigoli'},
+  { firstname: 'Giovanni', lastname: 'Brigoli' },
+  { firstname: 'Helium', lastname: 'Brigoli' },
+  { firstname: 'Lithium', lastname: 'Brigoli' },
+  { firstname: 'Beryllium', lastname: 'Brigoli' },
+  { firstname: 'Giovanni', lastname: 'Brigoli' },
+  { firstname: 'Helium', lastname: 'Brigoli' },
+  { firstname: 'Giovanni', lastname: 'Brigoli' },
+  { firstname: 'Helium', lastname: 'Brigoli' },
+  { firstname: 'Lithium', lastname: 'Brigoli' },
+  { firstname: 'Beryllium', lastname: 'Brigoli' },
+  { firstname: 'Giovanni', lastname: 'Brigoli' },
+  { firstname: 'Helium', lastname: 'Brigoli' },
+  { firstname: 'Giovanni', lastname: 'Brigoli' },
+  { firstname: 'Helium', lastname: 'Brigoli' },
+  { firstname: 'Lithium', lastname: 'Brigoli' },
+  { firstname: 'Beryllium', lastname: 'Brigoli' },
+  { firstname: 'Giovanni', lastname: 'Brigoli' },
+  { firstname: 'Helium', lastname: 'Brigoli' },
 ];
 
 @Component({
@@ -23,7 +34,7 @@ const USER_DATA: User[] = [
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
-  displayedColumns: string[] = ['select', 'position', 'firstname', 'lastname', 'action'];
+  displayedColumns: string[] = ['select', 'firstname', 'lastname'];
   dataSource = new MatTableDataSource<User>(USER_DATA);
   selection = new SelectionModel<User>(true, []);
 

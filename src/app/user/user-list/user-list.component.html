@@ -18,30 +18,16 @@
       </td>
     </ng-container>
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element; index"> {{ element.position }}</td>
-    </ng-container>
-
     <!-- First Name Column -->
     <ng-container matColumnDef="firstname">
       <th mat-header-cell *matHeaderCellDef> First Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.firstname}} </td>
     </ng-container>
 
     <!-- Last Name Column -->
     <ng-container matColumnDef="lastname">
       <th mat-header-cell *matHeaderCellDef> Last Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.lastname}} </td>
-    </ng-container>
-
-    <!-- Last Name Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-button (click)="$event.stopPropagation()">Edit</button>
-      </td>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.lastname}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>

@@ -50,6 +50,9 @@ import {
 import { HeaderComponent } from './header/header.component';
 import { UserFormComponent } from './user/user-form/user-form.component';
 import { UserListComponent } from './user/user-list/user-list.component';
+import {AppRoutingModule} from './app-routing.module';
+import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,9 @@ import { UserListComponent } from './user/user-list/user-list.component';
     ContentComponent,
     HeaderComponent,
     UserFormComponent,
-    UserListComponent
+    UserListComponent,
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +106,8 @@ import { UserListComponent } from './user/user-list/user-list.component';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
