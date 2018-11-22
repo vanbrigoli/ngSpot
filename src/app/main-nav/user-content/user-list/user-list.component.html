@@ -19,15 +19,21 @@
     </ng-container>
 
     <!-- First Name Column -->
-    <ng-container matColumnDef="firstname">
+    <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef> First Name </th>
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.firstname}} </td>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.firstName}} </td>
     </ng-container>
 
     <!-- Last Name Column -->
-    <ng-container matColumnDef="lastname">
+    <ng-container matColumnDef="lastName">
       <th mat-header-cell *matHeaderCellDef> Last Name </th>
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.lastname}} </td>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.lastName}} </td>
+    </ng-container>
+
+    <!-- Last Name Column -->
+    <ng-container matColumnDef="dateJoined">
+      <th mat-header-cell *matHeaderCellDef> Date Joined </th>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.dateJoined}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>

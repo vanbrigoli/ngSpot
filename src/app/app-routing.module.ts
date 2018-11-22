@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { HomeComponent } from './home/home.component';
-import { ContentComponent } from './content/content.component';
-import { PaymentComponent } from './payment/payment.component';
+import { UserContentComponent } from './main-nav/user-content/user-content.component';
+import { PaymentComponent } from './main-nav/payment/payment.component';
 
 const appRoutes: Routes = [
   {
@@ -16,7 +16,7 @@ const appRoutes: Routes = [
   {
     path: 'users', component: MainNavComponent, data: {header: 'Users'}, children: [
       {
-        path: '', component: ContentComponent
+        path: '', component: UserContentComponent
       }
     ]
   },

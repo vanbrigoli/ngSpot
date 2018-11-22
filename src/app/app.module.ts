@@ -1,13 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainNavComponent } from './main-nav/main-nav.component';
-import { SideNavComponent } from './side-nav/side-nav.component';
-import { ContentComponent } from './content/content.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import {
   MatAutocompleteModule,
@@ -47,13 +41,20 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import { HeaderComponent } from './header/header.component';
-import { UserFormComponent } from './user/user-form/user-form.component';
-import { UserListComponent } from './user/user-list/user-list.component';
-import {AppRoutingModule} from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
+import { UserContentComponent } from './main-nav/user-content/user-content.component';
+import { HeaderComponent } from './main-nav/header/header.component';
+import { UserFormComponent } from './main-nav/user-content/user-form/user-form.component';
+import { UserListComponent } from './main-nav/user-content/user-list/user-list.component';
 import { HomeComponent } from './home/home.component';
-import { FooterComponent } from './footer/footer.component';
-import { PaymentComponent } from './payment/payment.component';
+import { FooterComponent } from './home/footer/footer.component';
+import { PaymentComponent } from './main-nav/payment/payment.component';
+
+import { UsersService } from './services/users.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { PaymentComponent } from './payment/payment.component';
     MainNavComponent,
     NavbarComponent,
     SideNavComponent,
-    ContentComponent,
+    UserContentComponent,
     HeaderComponent,
     UserFormComponent,
     UserListComponent,
@@ -109,9 +110,11 @@ import { PaymentComponent } from './payment/payment.component';
     MatTooltipModule,
     MatTreeModule,
     MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
