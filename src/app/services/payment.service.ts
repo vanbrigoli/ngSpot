@@ -4,8 +4,13 @@ export class Payee {
   constructor(public fullName: string, public amount: number, public paid: boolean) {}
 }
 
+export interface Month {
+  value: number;
+  viewValue: string;
+}
+
 export interface Payment {
-  month: number;
+  month: Month;
   total: number;
 }
 

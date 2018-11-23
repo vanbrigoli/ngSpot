@@ -20,3 +20,8 @@ mat-list {
   text-align: end;
 }
 
+.card-action {
+  text-align: end;
+  margin-right: 3px;
+}
+

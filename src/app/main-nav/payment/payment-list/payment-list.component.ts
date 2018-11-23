@@ -11,6 +11,7 @@ export class PaymentListComponent implements OnInit {
   users: User[] = [];
   payees: Payee[] = [];
   showPaymentList = false;
+  monthOf: string;
 
   constructor(private usersService: UsersService, private paymentService: PaymentService) { }
 
@@ -20,13 +21,14 @@ export class PaymentListComponent implements OnInit {
       this.users = users;
     });
 
-    this.paymentService.onFormCreationEvent.subscribe((payment: Payment) => {
+    this.paymentService.onFormCreationEvent.subscribe(({ total, month }) => {
       this.showPaymentList = true;
-      this.initializePayees(this.users, payment);
+      this.monthOf = month.viewValue;
+      this.initializePayees(this.users, total);
     });
   }
 
-  initializePayees(users: User[], { total }) {
+  initializePayees(users: User[], total) {
     const userLength = users.length;
     users.forEach(user => {
       const fullName = `${user.firstName} ${user.lastName}`;

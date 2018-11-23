@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {PaymentService} from '../../../services/payment.service';
+import { PaymentService, Month } from '../../../services/payment.service';
 
-interface Month {
-  value: number;
-  viewValue: string;
-}
 
 const MONTHS: Month[] = [
   { value: 0, viewValue: 'January' },
@@ -46,6 +42,8 @@ export class CreateFormComponent implements OnInit {
   }
 
   onCreateForm() {
-    this.paymentService.onFormCreationEvent.next({ total: this.total.value, month: this.month.value });
+    this.paymentService.onFormCreationEvent.next({ total: this.total.value,
+      month: { value: this.month.value, viewValue:  MONTHS[this.month.value].viewValue} });
+    this.createForm.reset();
   }
 }

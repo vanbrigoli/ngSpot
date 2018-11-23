@@ -32,5 +32,7 @@ export class UserFormComponent implements OnInit {
   onAddUser() {
     const newUser = new User(this.firstName.value, this.lastName.value, this.dateJoined.value);
     this.usersService.addUser(newUser);
+    console.log(this.dateJoined);
+    this.userForm.reset();
   }
 }
