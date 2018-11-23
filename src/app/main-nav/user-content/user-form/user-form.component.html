@@ -5,10 +5,16 @@
   <mat-card-content class="card-content">
     <mat-form-field>
       <input matInput placeholder="First name" [formControl]="firstName" required>
+      <mat-error *ngIf="firstName.hasError('required')">
+        First name is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <input matInput placeholder="Last name" [formControl]="lastName" required>
+      <mat-error *ngIf="lastName.hasError('required')">
+        Last name is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -16,9 +22,12 @@
          [formControl]="dateJoined" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
+      <mat-error *ngIf="dateJoined.hasError('matDatepickerParse')">
+        Date joined is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions class="card-action">
-    <button mat-raised-button color="primary" (click)="onAddUser()">Add</button>
+    <button mat-raised-button color="primary" (click)="onAddUser()" [disabled]="!userForm.valid">Add</button>
   </mat-card-actions>
 </mat-card>
