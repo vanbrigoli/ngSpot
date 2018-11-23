@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PaymentService, Month } from '../../../services/payment.service';
+import { PaymentService, Month, Payment } from '../../../services/payment.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 const MONTHS: Month[] = [
@@ -29,8 +30,9 @@ export class CreateFormComponent implements OnInit {
   month: FormControl;
   total: FormControl;
   months: Month[] = MONTHS;
+  payments: Payment[] = [];
 
-  constructor(private paymentService: PaymentService) { }
+  constructor(private paymentService: PaymentService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.createForm = new FormGroup({
@@ -39,11 +41,14 @@ export class CreateFormComponent implements OnInit {
     });
     this.month = this.createForm.get('month');
     this.total = this.createForm.get('total');
+    this.payments = this.paymentService.payments;
   }
 
   onCreateForm() {
-    this.paymentService.onFormCreationEvent.next({ total: this.total.value,
+    this.payments.push({ total: this.total.value,
       month: { value: this.month.value, viewValue:  MONTHS[this.month.value].viewValue} });
+    this.paymentService.addPayment([...this.payments]);
+    this.router.navigate([this.month.value], { relativeTo: this.route });
     this.createForm.reset();
   }
 }

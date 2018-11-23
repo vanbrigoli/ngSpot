@@ -24,6 +24,9 @@ const appRoutes: Routes = [
     path: 'pay', component: MainNavComponent, data: {header: 'Pay'}, children: [
       {
         path: '', component: PaymentComponent
+      },
+      {
+        path: ':monthId', component: PaymentComponent
       }
     ]
   },
