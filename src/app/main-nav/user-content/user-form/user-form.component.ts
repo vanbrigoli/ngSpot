@@ -11,9 +11,9 @@ import { User, UsersService } from '../../../services/users.service';
 export class UserFormComponent implements OnInit {
   users: User[] = [];
   userForm;
-  firstName;
-  lastName;
-  dateJoined;
+  firstName: FormControl;
+  lastName: FormControl;
+  dateJoined: FormControl;
 
   constructor(private usersService: UsersService) { }
 
@@ -30,7 +30,7 @@ export class UserFormComponent implements OnInit {
   }
 
   onAddUser() {
-    const newUser = new User(this.firstName, this.lastName, this.dateJoined);
+    const newUser = new User(this.firstName.value, this.lastName.value, this.dateJoined.value);
     this.usersService.addUser(newUser);
   }
 }

@@ -1,0 +1,13 @@
+.payment-container {
+  display: flex;
+  padding: 16px;
+}
+
+.create-form {
+  flex: 1;
+  padding-right: 16px;
+}
+
+.payment-list {
+  flex: 3;
+}

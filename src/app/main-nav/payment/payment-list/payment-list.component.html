@@ -1,0 +1,8 @@
+<mat-list role="list" *ngIf="showPaymentList">
+  <mat-list-item role="listitem" class="payees" *ngFor="let payee of payees">
+    <div class="full-name">{{ payee.fullName }}</div>
+    <div class="amount">{{ payee.amount }}</div>
+    <div class="paid">{{ payee.paid }}</div>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>

@@ -1,0 +1,22 @@
+mat-list {
+  width: 100%;
+}
+
+.payees {
+  display: flex;
+}
+
+.full-name {
+  flex: 1;
+}
+
+.amount {
+  flex: 1;
+  text-align: center;
+}
+
+.paid {
+  flex: 1;
+  text-align: end;
+}
+

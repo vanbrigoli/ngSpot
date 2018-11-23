@@ -53,8 +53,11 @@ import { UserListComponent } from './main-nav/user-content/user-list/user-list.c
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
+import { CreateFormComponent } from './main-nav/payment/create-form/create-form.component';
+import { PaymentListComponent } from './main-nav/payment/payment-list/payment-list.component';
 
 import { UsersService } from './services/users.service';
+import { PaymentService } from './services/payment.service';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,9 @@ import { UsersService } from './services/users.service';
     UserListComponent,
     HomeComponent,
     FooterComponent,
-    PaymentComponent
+    PaymentComponent,
+    CreateFormComponent,
+    PaymentListComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +119,7 @@ import { UsersService } from './services/users.service';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [UsersService],
+  providers: [UsersService, PaymentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
