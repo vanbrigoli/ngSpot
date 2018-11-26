@@ -4,6 +4,7 @@
   top: 78px;
   left: 0;
   right: 0;
+  padding: 16px;
 }
 
 .sidenav {
@@ -12,4 +13,5 @@
   justify-content: center;
   width: 200px;
   background: #fafafa;
+  margin: -16px;
 }

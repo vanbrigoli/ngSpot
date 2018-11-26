@@ -1,6 +1,5 @@
 .content-container {
   display: flex;
-  padding: 16px;
 }
 
 .add-user-form {
@@ -9,7 +8,7 @@
 }
 
 .user-list {
-  flex: 2;
+  flex: 3;
 }
 
 /* TODO: Add handle small screens, change container to flex-direction: column */

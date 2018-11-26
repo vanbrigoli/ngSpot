@@ -2,27 +2,26 @@ mat-list {
   width: 100%;
 }
 
-.payments {
+.payees {
   display: flex;
-  cursor: pointer;
 }
 
 .header {
-  font-size: 16px;
   font-weight: bold;
+  /*color: rgba(0,0,0,.54);*/
   color: #3f51b5;
 }
 
-.month {
+.full-name {
   flex: 1;
 }
 
-.total {
+.amount {
   flex: 1;
   text-align: left;
 }
 
-.resolve {
+.paid {
   flex: 1;
   text-align: left;
 }
@@ -34,7 +33,13 @@ mat-list {
 }
 
 .card-action {
-  text-align: left;
-  margin-right: 3px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+  padding-bottom: 5px !important;
 }
 
+.action-button {
+  font-size: 16px;
+  margin-bottom: 10px;
+}

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService, User } from '../../../services/users.service';
-import { PaymentService, Payee, Payment } from '../../../services/payment.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { UsersService } from '../../../services/users.service';
+import { PaymentService, Payment } from '../../../services/payment.service';
 
 @Component({
   selector: 'app-payment-list',
@@ -9,33 +10,21 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./payment-list.component.css']
 })
 export class PaymentListComponent implements OnInit {
-  users: User[] = [];
-  payees: Payee[] = [];
-  showPaymentList = false;
-  monthOf: string;
-  monthId;
+  payments: Payment[] = [];
 
-  constructor(private usersService: UsersService, private paymentService: PaymentService, private route: ActivatedRoute,) { }
+  constructor(private usersService: UsersService,
+              private paymentService: PaymentService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.monthId = this.route.snapshot.params['monthId'];
-    if (this.monthId) {
-      this.users = this.usersService.users;
-      const payment = this.paymentService.getPaymentByMonthId(+this.monthId);
-      if (payment) {
-        this.monthOf = payment.month.viewValue;
-        this.initializePayees(this.users, payment.total);
-      }
-    }
-  }
-
-  initializePayees(users: User[], total) {
-    const userLength = users.length;
-    users.forEach(user => {
-      const fullName = `${user.firstName} ${user.lastName}`;
-      this.payees.push(new Payee(fullName, total / userLength, false));
+    this.payments = this.paymentService.paymentList;
+    this.paymentService.onPaymentAddedEvent.subscribe((payments: Payment[]) => {
+      this.payments = payments;
     });
-    this.showPaymentList = true;
   }
 
+  toPaymentView(monthId: number) {
+    this.router.navigate([monthId], { relativeTo: this.route });
+  }
 }

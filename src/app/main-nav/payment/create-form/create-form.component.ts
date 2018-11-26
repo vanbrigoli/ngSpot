@@ -45,10 +45,14 @@ export class CreateFormComponent implements OnInit {
   }
 
   onCreateForm() {
-    this.payments.push({ total: this.total.value,
-      month: { value: this.month.value, viewValue:  MONTHS[this.month.value].viewValue} });
+    this.payments.push({
+      total: this.total.value,
+      month: { value: this.month.value,
+        viewValue:  MONTHS[this.month.value].viewValue},
+      resolve: false
+    });
     this.paymentService.addPayment([...this.payments]);
-    this.router.navigate([this.month.value], { relativeTo: this.route });
+    this.paymentService.onPaymentAddedEvent.next([...this.payments]);
     this.createForm.reset();
   }
 }

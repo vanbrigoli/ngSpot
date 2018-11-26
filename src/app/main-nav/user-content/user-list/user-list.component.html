@@ -1,44 +1,27 @@
-<div class="user-list-container mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null"
-                      [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
-
-    <!-- First Name Column -->
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef> First Name </th>
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.firstName}} </td>
-    </ng-container>
-
-    <!-- Last Name Column -->
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef> Last Name </th>
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.lastName}} </td>
-    </ng-container>
-
-    <!-- Last Name Column -->
-    <ng-container matColumnDef="dateJoined">
-      <th mat-header-cell *matHeaderCellDef> Date Joined </th>
-      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.dateJoined}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="selection.toggle(row)">
-    </tr>
-  </table>
-</div>
+<mat-card class="example-card mat-elevation-z6">
+  <mat-card-header>
+    <mat-card-title>Users</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="users">
+    <mat-list role="list" *ngIf="users.length > 0; else noUsers">
+      <mat-list-item role="listitem" class="header">
+        <div class="first-name">First name</div>
+        <div class="last-name">Last name</div>
+        <div class="date-joined">Date joined</div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+      <mat-list-item role="listitem"
+                     *ngFor="let user of users">
+        <div class="first-name">{{ user.firstName }}</div>
+        <div class="last-name">{{ user.lastName }}</div>
+        <div class="date-joined">{{ user.dateJoined }}</div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <ng-template #noUsers>
+      <div class="nop">
+        <p>No users created yet.</p>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

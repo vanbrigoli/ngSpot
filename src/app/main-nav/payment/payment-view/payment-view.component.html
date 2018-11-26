@@ -1,0 +1,30 @@
+<mat-card class="example-card mat-elevation-z6">
+  <mat-card-header>
+    <mat-card-title *ngIf="showPaymentList">Payment for the month of {{ monthOf }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="payees">
+    <mat-list role="list" *ngIf="showPaymentList; else noPayment">
+      <mat-list-item role="listitem" class="header">
+        <div class="full-name">Full Name</div>
+        <div class="amount">Amount</div>
+        <div class="paid">Paid</div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+      <mat-list-item role="listitem" *ngFor="let payee of payees">
+        <div class="full-name">{{ payee.fullName }}</div>
+        <div class="amount">Php. {{ payee.amount }}</div>
+        <div class="paid">{{ payee.paid }}</div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <ng-template #noPayment>
+      <div class="nop">
+        <p>No payment created yet.</p>
+        <a class="action-button" mat-raised-button color="primary" routerLink="/pay">Create payment</a>
+      </div>
+    </ng-template>
+  </mat-card-content>
+  <mat-card-actions *ngIf="showPaymentList" class="card-action">
+    <a class="action-button" mat-raised-button color="primary" routerLink="/pay">Create another payment</a>
+  </mat-card-actions>
+</mat-card>

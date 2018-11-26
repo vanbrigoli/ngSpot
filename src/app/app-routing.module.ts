@@ -5,6 +5,7 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { HomeComponent } from './home/home.component';
 import { UserContentComponent } from './main-nav/user-content/user-content.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
+import {PaymentViewComponent} from './main-nav/payment/payment-view/payment-view.component';
 
 const appRoutes: Routes = [
   {
@@ -26,7 +27,7 @@ const appRoutes: Routes = [
         path: '', component: PaymentComponent
       },
       {
-        path: ':monthId', component: PaymentComponent
+        path: ':monthId', component: PaymentViewComponent
       }
     ]
   },

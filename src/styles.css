@@ -24,3 +24,7 @@ app-home {
   overflow-y: auto;
   height: 100%;
 }
+
+mat-card-title {
+  color: rgba(0,0,0,.54);
+}

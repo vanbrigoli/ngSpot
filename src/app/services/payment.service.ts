@@ -12,9 +12,11 @@ export interface Month {
 export interface Payment {
   month: Month;
   total: number;
+  resolve: boolean;
 }
 
 export class PaymentService {
+  onPaymentAddedEvent = new Subject<Payment[]>();
   paymentList: Payment[] = [];
 
   constructor() {}

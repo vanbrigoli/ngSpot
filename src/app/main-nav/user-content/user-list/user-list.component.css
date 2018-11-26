@@ -1,3 +1,40 @@
-table {
+mat-list {
   width: 100%;
 }
+
+.users {
+  display: flex;
+}
+
+.header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+.first-name{
+  flex: 1;
+}
+
+.last-name {
+  flex: 1;
+  text-align: left;
+}
+
+.date-joined {
+  flex: 1;
+  text-align: left;
+}
+
+.nop {
+  flex: 1;
+  text-align: center;
+  color: rgba(0,0,0,.54);
+}
+
+.card-action {
+  text-align: left;
+  margin-right: 3px;
+}
+
+

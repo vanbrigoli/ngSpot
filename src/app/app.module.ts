@@ -55,6 +55,7 @@ import { FooterComponent } from './home/footer/footer.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
 import { CreateFormComponent } from './main-nav/payment/create-form/create-form.component';
 import { PaymentListComponent } from './main-nav/payment/payment-list/payment-list.component';
+import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
 
 import { UsersService } from './services/users.service';
 import { PaymentService } from './services/payment.service';
@@ -73,7 +74,8 @@ import { PaymentService } from './services/payment.service';
     FooterComponent,
     PaymentComponent,
     CreateFormComponent,
-    PaymentListComponent
+    PaymentListComponent,
+    PaymentViewComponent
   ],
   imports: [
     BrowserModule,
