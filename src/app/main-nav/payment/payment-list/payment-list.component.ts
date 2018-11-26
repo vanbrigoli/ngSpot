@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
-import { UsersService } from '../../../services/users.service';
-import { PaymentService, Payment } from '../../../services/payment.service';
+import { Payment } from '../../../models/payment.models';
 
 @Component({
   selector: 'app-payment-list',
@@ -10,16 +11,20 @@ import { PaymentService, Payment } from '../../../services/payment.service';
   styleUrls: ['./payment-list.component.css']
 })
 export class PaymentListComponent implements OnInit {
+  private paymentCollection: AngularFirestoreCollection<Payment>;
+  private paymentListObs: Observable<Payment[]>;
+
   payments: Payment[] = [];
 
-  constructor(private usersService: UsersService,
-              private paymentService: PaymentService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private afs: AngularFirestore) {
+    this.paymentCollection = this.afs.collection<Payment>('payments');
+    this.paymentListObs = this.paymentCollection.valueChanges();
+  }
 
   ngOnInit() {
-    this.payments = this.paymentService.paymentList;
-    this.paymentService.onPaymentAddedEvent.subscribe((payments: Payment[]) => {
+    this.paymentListObs.subscribe((payments: Payment[]) => {
       this.payments = payments;
     });
   }

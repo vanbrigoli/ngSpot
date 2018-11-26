@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
-import { User, UsersService } from '../../../services/users.service';
+import { User } from '../../../models/user.models';
 
 @Component({
   selector: 'app-user-list',
@@ -8,13 +10,18 @@ import { User, UsersService } from '../../../services/users.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
+  private usersCollection: AngularFirestoreCollection<User>;
+  private userListObs: Observable<User[]>;
+
   users: User[] = [];
 
-  constructor(private usersService: UsersService) {}
+  constructor(private afs: AngularFirestore) {
+    this.usersCollection = this.afs.collection<User>('users');
+    this.userListObs = this.usersCollection.valueChanges();
+  }
 
   ngOnInit() {
-    this.users = this.usersService.users;
-    this.usersService.usersChangeEvent.subscribe((users: User[]) => {
+    this.userListObs.subscribe((users: User[]) => {
       this.users = users;
     });
   }

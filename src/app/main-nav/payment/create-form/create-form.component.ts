@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PaymentService, Month, Payment } from '../../../services/payment.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
+import { Month, Payment } from '../../../models/payment.models';
 
 const MONTHS: Month[] = [
   { value: 0, viewValue: 'January' },
@@ -26,13 +28,21 @@ const MONTHS: Month[] = [
   styleUrls: ['./create-form.component.css']
 })
 export class CreateFormComponent implements OnInit {
+  private paymentCollection: AngularFirestoreCollection<Payment>;
+  private paymentListObs: Observable<Payment[]>;
+
+  payments: Payment[] = [];
   createForm;
   month: FormControl;
   total: FormControl;
   months: Month[] = MONTHS;
-  payments: Payment[] = [];
 
-  constructor(private paymentService: PaymentService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private afs: AngularFirestore) {
+    this.paymentCollection = this.afs.collection<Payment>('payments');
+    this.paymentListObs = this.paymentCollection.valueChanges();
+  }
 
   ngOnInit() {
     this.createForm = new FormGroup({
@@ -41,18 +51,12 @@ export class CreateFormComponent implements OnInit {
     });
     this.month = this.createForm.get('month');
     this.total = this.createForm.get('total');
-    this.payments = this.paymentService.payments;
   }
 
   onCreateForm() {
-    this.payments.push({
-      total: this.total.value,
-      month: { value: this.month.value,
-        viewValue:  MONTHS[this.month.value].viewValue},
-      resolve: false
-    });
-    this.paymentService.addPayment([...this.payments]);
-    this.paymentService.onPaymentAddedEvent.next([...this.payments]);
+    const newPayment = new Payment(
+      new Month(this.month.value, MONTHS[this.month.value].viewValue), this.total.value, false);
+    this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
     this.createForm.reset();
   }
 }

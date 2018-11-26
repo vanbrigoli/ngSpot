@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { User, UsersService } from '../../../services/users.service';
+import { User } from '../../../models/user.models';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -9,16 +11,24 @@ import { User, UsersService } from '../../../services/users.service';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit {
+  private usersCollection: AngularFirestoreCollection<User>;
+  private userListObs: Observable<User[]>;
+
   users: User[] = [];
   userForm;
   firstName: FormControl;
   lastName: FormControl;
   dateJoined: FormControl;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private afs: AngularFirestore) {
+    this.usersCollection = this.afs.collection<User>('users');
+    this.userListObs = this.usersCollection.valueChanges();
+  }
 
   ngOnInit() {
-    this.users = this.usersService.users;
+    this.userListObs.subscribe((users: User[]) => {
+      this.users = users;
+    });
     this.userForm = new FormGroup({
       'firstName': new FormControl('', [Validators.required]),
       'lastName': new FormControl('', [Validators.required]),
@@ -30,9 +40,8 @@ export class UserFormComponent implements OnInit {
   }
 
   onAddUser() {
-    const newUser = new User(this.firstName.value, this.lastName.value, this.dateJoined.value);
-    this.usersService.addUser(newUser);
-    console.log(this.dateJoined);
-    this.userForm.reset();
+    // const newUser = new User(this.firstName.value, this.lastName.value, this.dateJoined.value);
+    // this.usersService.addUser(newUser);
+    // this.userForm.reset();
   }
 }

@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -57,8 +59,7 @@ import { CreateFormComponent } from './main-nav/payment/create-form/create-form.
 import { PaymentListComponent } from './main-nav/payment/payment-list/payment-list.component';
 import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
 
-import { UsersService } from './services/users.service';
-import { PaymentService } from './services/payment.service';
+import { environment as env } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -119,9 +120,11 @@ import { PaymentService } from './services/payment.service';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(env.firebaseConfig),
+    AngularFirestoreModule,
     AppRoutingModule
   ],
-  providers: [UsersService, PaymentService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

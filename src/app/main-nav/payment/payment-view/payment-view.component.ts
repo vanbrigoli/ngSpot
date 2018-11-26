@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { User, UsersService } from '../../../services/users.service';
-import { Payee, PaymentService } from '../../../services/payment.service';
 import { ActivatedRoute } from '@angular/router';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable} from 'rxjs';
+
+import { User } from '../../../models/user.models';
+import { Payee } from '../../../models/payment.models';
 
 @Component({
   selector: 'app-payment-view',
@@ -9,24 +12,31 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./payment-view.component.css']
 })
 export class PaymentViewComponent implements OnInit {
+  private usersCollection: AngularFirestoreCollection<User>;
+  private userListObs: Observable<User[]>;
+
   users: User[] = [];
   payees: Payee[] = [];
   showPaymentList = false;
   monthOf: string;
   monthId;
 
-  constructor(private usersService: UsersService,
-              private paymentService: PaymentService,
-              private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              private afs: AngularFirestore) {
+    this.usersCollection = this.afs.collection<User>('users');
+    this.userListObs = this.usersCollection.valueChanges();
+  }
 
   ngOnInit() {
     this.monthId = this.route.snapshot.params['monthId'];
-    this.users = this.usersService.users;
-    const payment = this.paymentService.getPaymentByMonthId(+this.monthId);
-    if (payment) {
-      this.monthOf = payment.month.viewValue;
-      this.initializePayees(this.users, payment.total);
-    }
+    this.userListObs.subscribe((users: User[]) => {
+      this.users = users;
+    });
+    // const payment = this.paymentService.getPaymentByMonthId(+this.monthId);
+    // if (payment) {
+    //   this.monthOf = payment.month.viewValue;
+    //   this.initializePayees(this.users, payment.total);
+    // }
   }
 
   initializePayees(users: User[], total) {
