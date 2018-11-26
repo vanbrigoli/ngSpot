@@ -54,9 +54,18 @@ export class CreateFormComponent implements OnInit {
   }
 
   onCreateForm() {
-    const newPayment = new Payment(
-      new Month(this.month.value, MONTHS[this.month.value].viewValue), this.total.value, false);
-    this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
-    this.createForm.reset();
+    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', this.month.value);
+    paymentQuery.get().then((querySnaphot) => {
+      querySnaphot.forEach((doc) => {
+        if (doc) {
+          console.log('Document already exist!');
+        } else {
+          const newPayment = new Payment(
+            new Month(this.month.value, MONTHS[this.month.value].viewValue), this.total.value, false);
+          this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
+          this.createForm.reset();
+        }
+      });
+    });
   }
 }

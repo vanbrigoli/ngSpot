@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable} from 'rxjs';
 
 import { User } from '../../../models/user.models';
-import { Payee } from '../../../models/payment.models';
+import { Payee, Payment } from '../../../models/payment.models';
 
 @Component({
   selector: 'app-payment-view',
@@ -14,6 +14,8 @@ import { Payee } from '../../../models/payment.models';
 export class PaymentViewComponent implements OnInit {
   private usersCollection: AngularFirestoreCollection<User>;
   private userListObs: Observable<User[]>;
+  private paymentCollection: AngularFirestoreCollection<Payment>;
+  private paymentListObs: Observable<Payment[]>;
 
   users: User[] = [];
   payees: Payee[] = [];
@@ -25,6 +27,8 @@ export class PaymentViewComponent implements OnInit {
               private afs: AngularFirestore) {
     this.usersCollection = this.afs.collection<User>('users');
     this.userListObs = this.usersCollection.valueChanges();
+    this.paymentCollection = this.afs.collection<Payment>('payments');
+    this.paymentListObs = this.paymentCollection.valueChanges();
   }
 
   ngOnInit() {
@@ -32,11 +36,16 @@ export class PaymentViewComponent implements OnInit {
     this.userListObs.subscribe((users: User[]) => {
       this.users = users;
     });
-    // const payment = this.paymentService.getPaymentByMonthId(+this.monthId);
-    // if (payment) {
-    //   this.monthOf = payment.month.viewValue;
-    //   this.initializePayees(this.users, payment.total);
-    // }
+    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', +this.monthId);
+    paymentQuery.get().then((querySnaphot) => {
+      querySnaphot.forEach((doc) => {
+        if (doc) {
+          const payment = doc.data();
+          this.monthOf = payment.month.viewValue;
+          this.initializePayees(this.users, payment.total);
+        }
+      });
+    });
   }
 
   initializePayees(users: User[], total) {
