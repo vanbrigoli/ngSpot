@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { User } from '../../../models/user.models';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+
+import { User } from '../../../models/user.models';
 
 @Component({
   selector: 'app-user-form',
@@ -40,8 +40,17 @@ export class UserFormComponent implements OnInit {
   }
 
   onAddUser() {
-    // const newUser = new User(this.firstName.value, this.lastName.value, this.dateJoined.value);
-    // this.usersService.addUser(newUser);
-    // this.userForm.reset();
+    this.usersCollection.ref.where('firstName', '==', this.firstName.value)
+      .where('lastName', '==', this.lastName.value).get()
+      .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.exists) {
+          console.log('User already exist.');
+        } else {
+          const newUser = new User(this.firstName.value, this.lastName.value, this.dateJoined.value);
+          this.usersCollection.add(JSON.parse(JSON.stringify(newUser)));
+        }
+      });
+    });
   }
 }

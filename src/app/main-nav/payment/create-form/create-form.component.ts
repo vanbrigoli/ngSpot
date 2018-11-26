@@ -54,10 +54,10 @@ export class CreateFormComponent implements OnInit {
   }
 
   onCreateForm() {
-    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', this.month.value);
-    paymentQuery.get().then((querySnaphot) => {
+    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', this.month.value).get();
+    paymentQuery.then((querySnaphot) => {
       querySnaphot.forEach((doc) => {
-        if (doc) {
+        if (doc.exists) {
           console.log('Document already exist!');
         } else {
           const newPayment = new Payment(
@@ -66,6 +66,8 @@ export class CreateFormComponent implements OnInit {
           this.createForm.reset();
         }
       });
+    }).catch(function(error) {
+      console.log('Error getting document:', error);
     });
   }
 }

@@ -36,15 +36,17 @@ export class PaymentViewComponent implements OnInit {
     this.userListObs.subscribe((users: User[]) => {
       this.users = users;
     });
-    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', +this.monthId);
-    paymentQuery.get().then((querySnaphot) => {
+    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', +this.monthId).get();
+    paymentQuery.then((querySnaphot) => {
       querySnaphot.forEach((doc) => {
-        if (doc) {
+        if (doc.exists) {
           const payment = doc.data();
           this.monthOf = payment.month.viewValue;
           this.initializePayees(this.users, payment.total);
         }
       });
+    }).catch(function(error) {
+      console.log('Error getting document:', error);
     });
   }
 
