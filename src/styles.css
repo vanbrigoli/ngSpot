@@ -10,18 +10,12 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-app-root {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 56px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
 app-home {
   overflow-y: auto;
+  height: 100%;
+}
+
+app-login {
   height: 100%;
 }
 

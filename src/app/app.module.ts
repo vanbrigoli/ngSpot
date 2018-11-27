@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -58,8 +59,11 @@ import { PaymentComponent } from './main-nav/payment/payment.component';
 import { CreateFormComponent } from './main-nav/payment/create-form/create-form.component';
 import { PaymentListComponent } from './main-nav/payment/payment-list/payment-list.component';
 import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
+import { LoginComponent } from './login/login.component';
 
 import { environment as env } from '../environments/environment';
+
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -76,7 +80,8 @@ import { environment as env } from '../environments/environment';
     PaymentComponent,
     CreateFormComponent,
     PaymentListComponent,
-    PaymentViewComponent
+    PaymentViewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -122,9 +127,10 @@ import { environment as env } from '../environments/environment';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(env.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
+    AngularFireAuthModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

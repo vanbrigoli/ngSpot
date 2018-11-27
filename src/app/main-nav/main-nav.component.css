@@ -1,10 +1,14 @@
-.container {
-  position: absolute;
-  bottom: 2px;
-  top: 78px;
+app-navbar {
+  color: #fff;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  padding: 16px;
+  z-index: 2;
+}
+
+.container {
+  height: 100%;
 }
 
 .sidenav {
@@ -13,5 +17,12 @@
   justify-content: center;
   width: 200px;
   background: #fafafa;
-  margin: -16px;
+}
+
+.main-container {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

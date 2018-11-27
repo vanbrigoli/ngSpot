@@ -5,7 +5,9 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { HomeComponent } from './home/home.component';
 import { UserContentComponent } from './main-nav/user-content/user-content.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
-import {PaymentViewComponent} from './main-nav/payment/payment-view/payment-view.component';
+import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
+import { LoginComponent } from './login/login.component';
+import {AuthGuard} from './services/auth.guard';
 
 const appRoutes: Routes = [
   {
@@ -15,14 +17,14 @@ const appRoutes: Routes = [
     path: 'home', component: HomeComponent
   },
   {
-    path: 'users', component: MainNavComponent, data: {header: 'Users'}, children: [
+    path: 'users', canActivate: [AuthGuard], component: MainNavComponent, data: {header: 'Users'}, children: [
       {
         path: '', component: UserContentComponent
       }
     ]
   },
   {
-    path: 'pay', component: MainNavComponent, data: {header: 'Pay'}, children: [
+    path: 'pay', canActivate: [AuthGuard], component: MainNavComponent, data: {header: 'Pay'}, children: [
       {
         path: '', component: PaymentComponent
       },
@@ -31,6 +33,9 @@ const appRoutes: Routes = [
       }
     ]
   },
+  {
+    path: 'login', component: LoginComponent
+  }
 ];
 
 @NgModule({
