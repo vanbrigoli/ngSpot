@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,17 +10,23 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) { }
+  constructor(private afAuth: AngularFireAuth,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.afAuth.user.subscribe(user => {
       if (user) {
-        this.router.navigate(['/home']);
+        const returnUrl = localStorage.getItem('returnUrl') || '/home';
+        this.router.navigateByUrl(returnUrl);
       }
     });
   }
 
   loginGoogle() {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/home';
+    localStorage.setItem('returnUrl', returnUrl);
+
     this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
 }

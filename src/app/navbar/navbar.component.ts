@@ -22,6 +22,6 @@ export class NavbarComponent implements OnInit {
 
   logoutGoogle() {
     this.afAuth.auth.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 }
