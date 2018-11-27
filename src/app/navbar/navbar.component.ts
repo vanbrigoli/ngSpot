@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class NavbarComponent implements OnInit {
   user;
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(public afAuth: AngularFireAuth, private router: Router) { }
 
   ngOnInit() {
     this.afAuth.user.subscribe(user => {
@@ -21,5 +22,6 @@ export class NavbarComponent implements OnInit {
 
   logoutGoogle() {
     this.afAuth.auth.signOut();
+    this.router.navigate(['/login']);
   }
 }

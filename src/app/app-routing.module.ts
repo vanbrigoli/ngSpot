@@ -7,35 +7,20 @@ import { UserContentComponent } from './main-nav/user-content/user-content.compo
 import { PaymentComponent } from './main-nav/payment/payment.component';
 import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
 import { LoginComponent } from './login/login.component';
-import {AuthGuard} from './services/auth.guard';
+
+import { AuthGuard } from './services/auth.guard';
 
 const appRoutes: Routes = [
-  {
-    path: '', redirectTo: 'home', pathMatch: 'full'
-  },
-  {
-    path: 'home', component: HomeComponent
-  },
-  {
-    path: 'users', canActivate: [AuthGuard], component: MainNavComponent, data: {header: 'Users'}, children: [
-      {
-        path: '', component: UserContentComponent
-      }
-    ]
-  },
-  {
-    path: 'pay', canActivate: [AuthGuard], component: MainNavComponent, data: {header: 'Pay'}, children: [
-      {
-        path: '', component: PaymentComponent
-      },
-      {
-        path: ':monthId', component: PaymentViewComponent
-      }
-    ]
-  },
-  {
-    path: 'login', component: LoginComponent
-  }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'users', component: MainNavComponent, data: {header: 'Users'}, children: [
+      { path: '', component: UserContentComponent }
+    ], canActivate: [AuthGuard] },
+  { path: 'pay', component: MainNavComponent, data: {header: 'Pay'}, children: [
+      { path: '', component: PaymentComponent },
+      { path: ':monthId', component: PaymentViewComponent }
+    ], canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
