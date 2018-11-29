@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 import { Month, Payment } from '../../../models/payment.models';
 
@@ -40,7 +41,8 @@ export class CreateFormComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private afs: AngularFirestore) {
+              private afs: AngularFirestore,
+              private snackBar: MatSnackBar) {
     this.paymentCollection = this.afs.collection<Payment>('payments');
     this.paymentListObs = this.paymentCollection.valueChanges();
   }
@@ -56,24 +58,24 @@ export class CreateFormComponent implements OnInit {
 
   onCreateForm() {
     if (this.payments.length === 0) {
-      const newPayment = new Payment(
-        new Month(this.month.value, MONTHS[this.month.value].viewValue),
-        this.total.value,
-        false,
-        this.appUser.uid);
-      this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
+      this.addPayment();
     } else {
       const paymentArr = this.payments.filter(payment => payment.month.value === this.month.value);
       if (paymentArr.length === 0) {
-        const newPayment = new Payment(
-          new Month(this.month.value, MONTHS[this.month.value].viewValue),
-          this.total.value,
-          false,
-          this.appUser.uid);
-        this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
+        this.addPayment();
       } else {
-        console.log('Snackbar here');
+        this.snackBar.open('Payment already exists.', 'Close', { duration: 2000 });
       }
     }
+  }
+
+  private addPayment() {
+    const newPayment = new Payment(
+      new Month(this.month.value, MONTHS[this.month.value].viewValue),
+      this.total.value,
+      false,
+      this.appUser.uid);
+    this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
+    this.createForm.reset();
   }
 }

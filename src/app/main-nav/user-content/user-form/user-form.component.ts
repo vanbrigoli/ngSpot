@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 import { Member } from '../../../models/user.models';
 
@@ -21,7 +22,7 @@ export class UserFormComponent implements OnInit {
   lastName: FormControl;
   dateJoined: FormControl;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) {
     this.membersCollection = this.afs.collection<Member>('members');
     this.memberListObs = this.membersCollection.valueChanges();
   }
@@ -39,24 +40,30 @@ export class UserFormComponent implements OnInit {
 
   onAddUser() {
     if (this.members.length === 0) {
-      const newMember = new Member(this.firstName.value,
-        this.lastName.value,
-        this.dateJoined.value,
-        this.appUser.uid);
-      this.membersCollection.add(JSON.parse(JSON.stringify(newMember)));
+      this.addMember();
     } else {
       const memberArr = this.members.filter(member => {
-        return member.firstName === this.firstName.value && member.lastName === this.lastName.value;
+        return member.firstName.toLowerCase() === this.firstName.value.toLowerCase()
+          && member.lastName.toLowerCase() === this.lastName.value.toLowerCase();
       });
       if (memberArr.length === 0) {
-        const newMember = new Member(this.firstName.value,
-          this.lastName.value,
-          this.dateJoined.value,
-          this.appUser.uid);
-        this.membersCollection.add(JSON.parse(JSON.stringify(newMember)));
+        this.addMember();
       } else {
-        console.log('Snackbar here');
+        this.snackBar.open('Member already exists.', 'Close', { duration: 2000 });
       }
     }
+  }
+
+  private addMember() {
+    const newMember = new Member(this.capitalize(this.firstName.value),
+      this.capitalize(this.lastName.value),
+      this.dateJoined.value,
+      this.appUser.uid);
+    this.membersCollection.add(JSON.parse(JSON.stringify(newMember)));
+    this.userForm.reset();
+  }
+
+  private capitalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 }
