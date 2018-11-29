@@ -36,6 +36,7 @@ export class CreateFormComponent implements OnInit {
   month: FormControl;
   total: FormControl;
   months: Month[] = MONTHS;
+  appUser;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -45,6 +46,12 @@ export class CreateFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appUser = localStorage.getItem('appUser');
+    this.paymentListObs.subscribe(payments => {
+      this.payments = payments.filter(payment => {
+        return payment.createdBy === this.appUser.uid;
+      });
+    });
     this.createForm = new FormGroup({
       'month': new FormControl('', [Validators.required]),
       'total': new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')])
@@ -54,20 +61,21 @@ export class CreateFormComponent implements OnInit {
   }
 
   onCreateForm() {
-    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', this.month.value).get();
-    paymentQuery.then((querySnaphot) => {
-      querySnaphot.forEach((doc) => {
-        if (doc.exists) {
-          console.log('Document already exist!');
-        } else {
-          const newPayment = new Payment(
-            new Month(this.month.value, MONTHS[this.month.value].viewValue), this.total.value, false);
-          this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
-          this.createForm.reset();
-        }
-      });
-    }).catch(function(error) {
-      console.log('Error getting document:', error);
-    });
+
+    // const paymentQuery = this.paymentCollection.ref.where('month.value', '==', this.month.value).get();
+    // paymentQuery.then((querySnaphot) => {
+    //   querySnaphot.forEach((doc) => {
+    //     if (doc.exists) {
+    //       console.log('Document already exist!');
+    //     } else {
+    //       const newPayment = new Payment(
+    //         new Month(this.month.value, MONTHS[this.month.value].viewValue), this.total.value, false);
+    //       this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
+    //       this.createForm.reset();
+    //     }
+    //   });
+    // }).catch(function(error) {
+    //   console.log('Error getting document:', error);
+    // });
   }
 }

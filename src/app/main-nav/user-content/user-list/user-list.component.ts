@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Member } from '../../../models/user.models';
 
@@ -10,19 +8,11 @@ import { Member } from '../../../models/user.models';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  private membersCollection: AngularFirestoreCollection<Member>;
-  private memberListObs: Observable<Member[]>;
+  @Input() members: Member[] = [];
 
-  members: Member[] = [];
-
-  constructor(private afs: AngularFirestore) {
-    this.membersCollection = this.afs.collection<Member>('members');
-    this.memberListObs = this.membersCollection.valueChanges();
+  constructor() {
   }
 
   ngOnInit() {
-    this.memberListObs.subscribe((members: Member[]) => {
-      this.members = members;
-    });
   }
 }

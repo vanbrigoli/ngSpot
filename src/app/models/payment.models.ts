@@ -7,5 +7,5 @@ export class Month {
 }
 
 export class Payment {
-  constructor(public month: Month, public total: number, public resolve: boolean) {}
+  constructor(public month: Month, public total: number, public resolve: boolean, public createdBy: string) {}
 }

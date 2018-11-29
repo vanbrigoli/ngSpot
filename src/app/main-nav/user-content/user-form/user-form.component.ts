@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -11,10 +11,10 @@ import { Member } from '../../../models/user.models';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit {
+  @Input() members: Member[] = [];
   private membersCollection: AngularFirestoreCollection<Member>;
   private memberListObs: Observable<Member[]>;
 
-  members: Member[] = [];
   userForm;
   firstName: FormControl;
   lastName: FormControl;
@@ -28,12 +28,6 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this.appUser = JSON.parse(localStorage.getItem('appUser'));
-
-    this.memberListObs.subscribe((members: Member[]) => {
-      this.members = members.filter(member => {
-        return member.memberOf === this.appUser.uid;
-      });
-    });
     this.userForm = new FormGroup({
       'firstName': new FormControl('', [Validators.required]),
       'lastName': new FormControl('', [Validators.required]),
@@ -55,7 +49,7 @@ export class UserFormComponent implements OnInit {
       const memberArr = this.members.filter(member => {
         return member.firstName === this.firstName.value && member.lastName === this.lastName.value;
       });
-      if (!memberArr) {
+      if (memberArr.length === 0) {
         const newMember = new Member(this.firstName.value,
           this.lastName.value,
           this.dateJoined.value,
