@@ -1,5 +1,5 @@
 <div class="main-container">
-  <app-navbar class="mat-elevation-z6"></app-navbar>
+  <app-navbar class="mat-elevation-z6" [user]="user"></app-navbar>
   <app-header (toggleSideNav)="sidenav.toggle()"></app-header>
   <mat-sidenav-container class="container">
     <mat-sidenav #sidenav mode="side"

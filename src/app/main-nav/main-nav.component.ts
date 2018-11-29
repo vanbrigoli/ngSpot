@@ -20,6 +20,8 @@ export class MainNavComponent implements OnInit {
       map(result => result.matches)
     );
 
+  user;
+
   constructor(private breakpointObserver: BreakpointObserver,
               private afAuth: AngularFireAuth,
               private afs: AngularFirestore) {
@@ -29,11 +31,7 @@ export class MainNavComponent implements OnInit {
 
   ngOnInit() {
     this.afAuth.user.subscribe(user => {
-      const localUser = localStorage.getItem('appUser');
-      if (localUser == null) {
-        localStorage.setItem('appUser', JSON.stringify(user));
-        this.checkIfUserExistsInDb(user);
-      }
+      this.user = this.checkIfUserExistsInDb(user);
     });
   }
 
@@ -50,5 +48,6 @@ export class MainNavComponent implements OnInit {
         }
       });
     }
+    return user;
   }
 }

@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 
 import { Member } from '../../models/user.models';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-content',
@@ -16,13 +17,16 @@ export class UserContentComponent implements OnInit {
   members: Member[] = [];
   appUser;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {
     this.membersCollection = this.afs.collection<Member>('members');
     this.memberListObs = this.membersCollection.valueChanges();
   }
 
   ngOnInit() {
-    this.appUser = JSON.parse(localStorage.getItem('appUser'));
+    this.afAuth.user.subscribe(user => {
+      this.appUser = user;
+    });
+
     this.memberListObs.subscribe((members: Member[]) => {
       this.members = members.filter(member => member.memberOf === this.appUser.uid);
     });

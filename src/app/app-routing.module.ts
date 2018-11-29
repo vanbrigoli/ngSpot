@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { UserContentComponent } from './main-nav/user-content/user-content.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
 import { LoginComponent } from './login/login.component';
+import { ShareViewComponent } from './share-view/share-view.component';
 
 import { AuthGuard } from './services/auth.guard';
 
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
       { path: '', component: PaymentComponent }
     ], canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
+  { path: 'share', component: ShareViewComponent },
   { path: '**', redirectTo: 'home' }
 ];
 

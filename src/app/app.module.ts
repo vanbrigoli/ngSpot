@@ -64,6 +64,7 @@ import { LoginComponent } from './login/login.component';
 import { environment as env } from '../environments/environment';
 
 import { AuthGuard } from './services/auth.guard';
+import { ShareViewComponent } from './share-view/share-view.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { AuthGuard } from './services/auth.guard';
     CreateFormComponent,
     PaymentListComponent,
     PaymentViewComponent,
-    LoginComponent
+    LoginComponent,
+    ShareViewComponent
   ],
   imports: [
     BrowserModule,
