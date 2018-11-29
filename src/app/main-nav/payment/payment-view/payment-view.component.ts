@@ -53,8 +53,14 @@ export class PaymentViewComponent implements OnInit {
       });
       if (payeesArr.length === 0) {
         this.addSharePayment();
+        this.router.navigate(['/share'], { queryParams:
+            { paymentMonth: this.payment.month.value,
+              createdBy: this.payment.createdBy }});
       } else {
         console.log('Already added');
+        this.router.navigate(['/share'], { queryParams:
+            { paymentMonth: this.payment.month.value,
+              createdBy: this.payment.createdBy }});
       }
     });
   }
@@ -62,10 +68,6 @@ export class PaymentViewComponent implements OnInit {
   private addSharePayment() {
     this.payeesCollection.add(JSON.parse(JSON.stringify(new SharePayment(
       this.payment.month, this.payees, this.payment.createdBy
-    )))).then(() => {
-      this.router.navigate(['/share'], { queryParams:
-          { paymentMonth: this.payment.month.value,
-            createdBy: this.payment.createdBy }});
-    });
+    ))));
   }
 }
