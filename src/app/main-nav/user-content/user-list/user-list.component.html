@@ -1,9 +1,9 @@
 <mat-card class="example-card mat-elevation-z6">
   <mat-card-header>
-    <mat-card-title>Users</mat-card-title>
+    <mat-card-title>Members</mat-card-title>
   </mat-card-header>
   <mat-card-content class="users">
-    <mat-list role="list" *ngIf="users.length > 0; else noUsers">
+    <mat-list role="list" *ngIf="members.length > 0; else noMembers">
       <mat-list-item role="listitem" class="header">
         <div class="first-name">First name</div>
         <div class="last-name">Last name</div>
@@ -11,16 +11,16 @@
         <mat-divider></mat-divider>
       </mat-list-item>
       <mat-list-item role="listitem"
-                     *ngFor="let user of users">
-        <div class="first-name">{{ user.firstName }}</div>
-        <div class="last-name">{{ user.lastName }}</div>
-        <div class="date-joined">{{ user.dateJoined }}</div>
+                     *ngFor="let member of members">
+        <div class="first-name">{{ member.firstName }}</div>
+        <div class="last-name">{{ member.lastName }}</div>
+        <div class="date-joined">{{ member.dateJoined }}</div>
         <mat-divider></mat-divider>
       </mat-list-item>
     </mat-list>
-    <ng-template #noUsers>
+    <ng-template #noMembers>
       <div class="nop">
-        <p>No users created yet.</p>
+        <p>No members created yet.</p>
       </div>
     </ng-template>
   </mat-card-content>

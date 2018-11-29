@@ -13,15 +13,12 @@ export class NavbarComponent implements OnInit {
   constructor(public afAuth: AngularFireAuth, private router: Router) { }
 
   ngOnInit() {
-    this.afAuth.user.subscribe(user => {
-      if (user) {
-        this.user = user;
-      }
-    });
+    this.user = JSON.parse(localStorage.getItem('appUser'));
   }
 
   logoutGoogle() {
     this.afAuth.auth.signOut();
+    localStorage.removeItem('appUser');
     this.router.navigate(['/home']);
   }
 }

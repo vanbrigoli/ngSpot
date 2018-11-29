@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
-import { User } from '../../../models/user.models';
+import { Member } from '../../../models/user.models';
 
 @Component({
   selector: 'app-user-form',
@@ -11,23 +11,28 @@ import { User } from '../../../models/user.models';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit {
-  private usersCollection: AngularFirestoreCollection<User>;
-  private userListObs: Observable<User[]>;
+  private membersCollection: AngularFirestoreCollection<Member>;
+  private memberListObs: Observable<Member[]>;
 
-  users: User[] = [];
+  members: Member[] = [];
   userForm;
   firstName: FormControl;
   lastName: FormControl;
   dateJoined: FormControl;
+  appUser;
 
   constructor(private afs: AngularFirestore) {
-    this.usersCollection = this.afs.collection<User>('users');
-    this.userListObs = this.usersCollection.valueChanges();
+    this.membersCollection = this.afs.collection<Member>('members');
+    this.memberListObs = this.membersCollection.valueChanges();
   }
 
   ngOnInit() {
-    this.userListObs.subscribe((users: User[]) => {
-      this.users = users;
+    this.appUser = JSON.parse(localStorage.getItem('appUser'));
+
+    this.memberListObs.subscribe((members: Member[]) => {
+      this.members = members.filter(member => {
+        return member.memberOf === this.appUser.uid;
+      });
     });
     this.userForm = new FormGroup({
       'firstName': new FormControl('', [Validators.required]),
@@ -40,17 +45,25 @@ export class UserFormComponent implements OnInit {
   }
 
   onAddUser() {
-    this.usersCollection.ref.where('firstName', '==', this.firstName.value)
-      .where('lastName', '==', this.lastName.value).get()
-      .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        if (doc.exists) {
-          console.log('User already exist.');
-        } else {
-          const newUser = new User(this.firstName.value, this.lastName.value, this.dateJoined.value);
-          this.usersCollection.add(JSON.parse(JSON.stringify(newUser)));
-        }
+    if (this.members.length === 0) {
+      const newMember = new Member(this.firstName.value,
+        this.lastName.value,
+        this.dateJoined.value,
+        this.appUser.uid);
+      this.membersCollection.add(JSON.parse(JSON.stringify(newMember)));
+    } else {
+      const memberArr = this.members.filter(member => {
+        return member.firstName === this.firstName.value && member.lastName === this.lastName.value;
       });
-    });
+      if (!memberArr) {
+        const newMember = new Member(this.firstName.value,
+          this.lastName.value,
+          this.dateJoined.value,
+          this.appUser.uid);
+        this.membersCollection.add(JSON.parse(JSON.stringify(newMember)));
+      } else {
+        console.log('Snackbar here');
+      }
+    }
   }
 }
