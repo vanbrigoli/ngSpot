@@ -5,22 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable} from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
-import { Month, Payment } from '../../../models/payment.models';
-
-const MONTHS: Month[] = [
-  { value: 0, viewValue: 'January' },
-  { value: 1, viewValue: 'February' },
-  { value: 2, viewValue: 'March' },
-  { value: 3, viewValue: 'April' },
-  { value: 4, viewValue: 'May' },
-  { value: 5, viewValue: 'June' },
-  { value: 6, viewValue: 'July' },
-  { value: 7, viewValue: 'August' },
-  { value: 8, viewValue: 'September' },
-  { value: 9, viewValue: 'October' },
-  { value: 10, viewValue: 'November' },
-  { value: 11, viewValue: 'December' }
-];
+import { Month, Payment, MONTHS } from '../../../models/payment.models';
 
 
 @Component({

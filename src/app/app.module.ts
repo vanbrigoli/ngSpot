@@ -60,11 +60,12 @@ import { CreateFormComponent } from './main-nav/payment/create-form/create-form.
 import { PaymentListComponent } from './main-nav/payment/payment-list/payment-list.component';
 import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
 import { LoginComponent } from './login/login.component';
+import { ShareViewComponent } from './share-view/share-view.component';
 
 import { environment as env } from '../environments/environment';
 
 import { AuthGuard } from './services/auth.guard';
-import { ShareViewComponent } from './share-view/share-view.component';
+import { ShareViewService } from './services/share-view.service';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,7 @@ import { ShareViewComponent } from './share-view/share-view.component';
     AngularFireAuthModule,
     AppRoutingModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, ShareViewService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

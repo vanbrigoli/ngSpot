@@ -20,4 +20,8 @@ export class PaymentListComponent implements OnInit {
   toPaymentView(payment: Payment) {
     this.showPaymentView.emit(payment);
   }
+
+  changeTooltipMsg(payment: Payment) {
+    return `Go to payment view for ${payment.month.viewValue}`;
+  }
 }
