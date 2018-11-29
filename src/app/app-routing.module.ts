@@ -5,7 +5,6 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { HomeComponent } from './home/home.component';
 import { UserContentComponent } from './main-nav/user-content/user-content.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
-import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
 import { LoginComponent } from './login/login.component';
 
 import { AuthGuard } from './services/auth.guard';
@@ -17,10 +16,10 @@ const appRoutes: Routes = [
       { path: '', component: UserContentComponent }
     ], canActivate: [AuthGuard] },
   { path: 'pay', component: MainNavComponent, data: {header: 'Pay'}, children: [
-      { path: '', component: PaymentComponent },
-      { path: ':monthId', component: PaymentViewComponent }
+      { path: '', component: PaymentComponent }
     ], canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

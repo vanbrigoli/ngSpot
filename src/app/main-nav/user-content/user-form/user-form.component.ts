@@ -12,6 +12,7 @@ import { Member } from '../../../models/user.models';
 })
 export class UserFormComponent implements OnInit {
   @Input() members: Member[] = [];
+  @Input() appUser;
   private membersCollection: AngularFirestoreCollection<Member>;
   private memberListObs: Observable<Member[]>;
 
@@ -19,7 +20,6 @@ export class UserFormComponent implements OnInit {
   firstName: FormControl;
   lastName: FormControl;
   dateJoined: FormControl;
-  appUser;
 
   constructor(private afs: AngularFirestore) {
     this.membersCollection = this.afs.collection<Member>('members');
@@ -27,7 +27,6 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appUser = JSON.parse(localStorage.getItem('appUser'));
     this.userForm = new FormGroup({
       'firstName': new FormControl('', [Validators.required]),
       'lastName': new FormControl('', [Validators.required]),

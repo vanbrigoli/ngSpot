@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
+import { Member } from '../../models/user.models';
+import { Payment } from '../../models/payment.models';
 
 @Component({
   selector: 'app-payment',
@@ -7,23 +12,38 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
-  monthId;
-  showForm = true;
+  private membersCollection: AngularFirestoreCollection<Member>;
+  private memberListObs: Observable<Member[]>;
+  private paymentCollection: AngularFirestoreCollection<Payment>;
+  private paymentListObs: Observable<Payment[]>;
 
-  constructor(private route: ActivatedRoute) { }
+  showPaymentView = false;
+  payment: Payment;
+  appUser;
+  members: Member[] = [];
+  payments: Payment[] = [];
+
+  constructor(private route: ActivatedRoute,
+              private afs: AngularFirestore) {
+    this.membersCollection = this.afs.collection<Member>('members');
+    this.memberListObs = this.membersCollection.valueChanges();
+    this.paymentCollection = this.afs.collection<Payment>('payments');
+    this.paymentListObs = this.paymentCollection.valueChanges();
+  }
 
   ngOnInit() {
-    this.monthId = this.route.snapshot.params['monthId'];
-    this.showCreateForm(this.monthId);
-    this.route.params.subscribe((params: Params) => {
-      this.monthId = params['monthId'];
-      this.showCreateForm(this.monthId);
+    this.appUser = JSON.parse(localStorage.getItem('appUser'));
+    this.memberListObs.subscribe((members: Member[]) => {
+      this.members = members.filter(member => member.memberOf === this.appUser.uid);
+    });
+
+    this.paymentListObs.subscribe((payments: Payment[]) => {
+      this.payments = payments.filter(payment => payment.createdBy === this.appUser.uid);
     });
   }
 
-  showCreateForm(monthId: number) {
-    if (monthId) {
-      this.showForm = false;
-    }
+  handleReturnPayment(payment: Payment) {
+    this.showPaymentView = true;
+    this.payment = payment;
   }
 }

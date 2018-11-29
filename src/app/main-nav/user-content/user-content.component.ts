@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import { Member } from '../../models/user.models';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+
+import { Member } from '../../models/user.models';
 
 @Component({
   selector: 'app-content',

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
 
-import { User } from '../../../models/user.models';
+import { User, Member } from '../../../models/user.models';
 import { Payee, Payment } from '../../../models/payment.models';
 
 @Component({
@@ -12,50 +12,31 @@ import { Payee, Payment } from '../../../models/payment.models';
   styleUrls: ['./payment-view.component.css']
 })
 export class PaymentViewComponent implements OnInit {
-  private usersCollection: AngularFirestoreCollection<User>;
-  private userListObs: Observable<User[]>;
-  private paymentCollection: AngularFirestoreCollection<Payment>;
-  private paymentListObs: Observable<Payment[]>;
+  @Input() members: Member[] = [];
+  @Input() payment: Payment;
+  @Output() returnToPayView = new EventEmitter<void>();
 
-  users: User[] = [];
   payees: Payee[] = [];
   showPaymentList = false;
   monthOf: string;
-  monthId;
 
-  constructor(private route: ActivatedRoute,
-              private afs: AngularFirestore) {
-    this.usersCollection = this.afs.collection<User>('users');
-    this.userListObs = this.usersCollection.valueChanges();
-    this.paymentCollection = this.afs.collection<Payment>('payments');
-    this.paymentListObs = this.paymentCollection.valueChanges();
+  constructor() {
   }
 
   ngOnInit() {
-    this.monthId = this.route.snapshot.params['monthId'];
-    this.userListObs.subscribe((users: User[]) => {
-      this.users = users;
-    });
-    const paymentQuery = this.paymentCollection.ref.where('month.value', '==', +this.monthId).get();
-    paymentQuery.then((querySnaphot) => {
-      querySnaphot.forEach((doc) => {
-        if (doc.exists) {
-          const payment = doc.data();
-          this.monthOf = payment.month.viewValue;
-          this.initializePayees(this.users, payment.total);
-        }
-      });
-    }).catch(function(error) {
-      console.log('Error getting document:', error);
+    this.monthOf = this.payment.month.viewValue;
+    this.initializePayees(this.members, this.payment.total);
+  }
+
+  initializePayees(members: Member[], total) {
+    const membersLength = members.length;
+    members.forEach(user => {
+      const fullName = `${user.firstName} ${user.lastName}`;
+      this.payees.push(new Payee(fullName, total / membersLength, false));
     });
   }
 
-  initializePayees(users: User[], total) {
-    const userLength = users.length;
-    users.forEach(user => {
-      const fullName = `${user.firstName} ${user.lastName}`;
-      this.payees.push(new Payee(fullName, total / userLength, false));
-    });
-    this.showPaymentList = true;
+  toPayView() {
+    this.returnToPayView.emit();
   }
 }

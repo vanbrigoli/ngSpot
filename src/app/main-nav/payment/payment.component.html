@@ -1,8 +1,11 @@
-<div class="payment-container">
-  <div class="create-form" *ngIf="showForm">
-    <app-create-form></app-create-form>
+<div class="payment-container" *ngIf="!showPaymentView">
+  <div class="create-form">
+    <app-create-form [payments]="payments" [appUser]="appUser"></app-create-form>
   </div>
   <div class="payment-list">
-    <app-payment-list></app-payment-list>
+    <app-payment-list [payments]="payments" (showPaymentView)="handleReturnPayment($event)"></app-payment-list>
   </div>
+</div>
+<div class="payment-view" *ngIf="showPaymentView">
+  <app-payment-view [members]="members" [payment]="payment" (returnToPayView)="showPaymentView = false"></app-payment-view>
 </div>

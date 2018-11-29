@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Payment } from '../../../models/payment.models';
 
@@ -11,25 +8,16 @@ import { Payment } from '../../../models/payment.models';
   styleUrls: ['./payment-list.component.css']
 })
 export class PaymentListComponent implements OnInit {
-  private paymentCollection: AngularFirestoreCollection<Payment>;
-  private paymentListObs: Observable<Payment[]>;
+  @Input() payments: Payment[] = [];
+  @Output() showPaymentView = new EventEmitter<Payment>()
 
-  payments: Payment[] = [];
-
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private afs: AngularFirestore) {
-    this.paymentCollection = this.afs.collection<Payment>('payments');
-    this.paymentListObs = this.paymentCollection.valueChanges();
+  constructor() {
   }
 
   ngOnInit() {
-    this.paymentListObs.subscribe((payments: Payment[]) => {
-      this.payments = payments;
-    });
   }
 
-  toPaymentView(monthId: number) {
-    this.router.navigate([monthId], { relativeTo: this.route });
+  toPaymentView(payment: Payment) {
+    this.showPaymentView.emit(payment);
   }
 }

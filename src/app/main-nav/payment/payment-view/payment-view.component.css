@@ -8,7 +8,6 @@ mat-list {
 
 .header {
   font-weight: bold;
-  /*color: rgba(0,0,0,.54);*/
   color: #3f51b5;
 }
 
@@ -24,12 +23,6 @@ mat-list {
 .paid {
   flex: 1;
   text-align: left;
-}
-
-.nop {
-  flex: 1;
-  text-align: center;
-  color: rgba(0,0,0,.54);
 }
 
 .card-action {

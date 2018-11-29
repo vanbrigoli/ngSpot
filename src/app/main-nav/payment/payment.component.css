@@ -11,3 +11,7 @@
 .payment-list {
   flex: 3;
 }
+
+.payment-view {
+  padding: 16px;
+}
