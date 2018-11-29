@@ -1,16 +1,21 @@
 <div class="main-container">
   <app-navbar class="mat-elevation-z6" [user]="user"></app-navbar>
-  <app-header (toggleSideNav)="sidenav.toggle()"></app-header>
-  <mat-sidenav-container class="container">
-    <mat-sidenav #sidenav mode="side"
-                 class="sidenav"
-                 [fixedInViewport]="false"
-                 [fixedTopGap]="0">
-      <app-side-nav></app-side-nav>
-    </mat-sidenav>
+  <div class="header">
+    <app-header (toggleSideNav)="sidenav.toggle()"></app-header>
+  </div>
+  <div class="nav-side">
+    <mat-sidenav-container>
+      <mat-sidenav #sidenav mode="side"
+                   class="sidenav"
+                   [fixedInViewport]="false"
+                   [fixedTopGap]="0">
+        <app-side-nav></app-side-nav>
+      </mat-sidenav>
 
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
 </div>
+

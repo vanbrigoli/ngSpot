@@ -1,6 +1,7 @@
 .payment-container {
   display: flex;
   padding: 16px;
+  height: 100%;
 }
 
 .create-form {

@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { AppUser } from '../models/user.models';
 import { OnInit } from '@angular/core';
+
+import { AppUser } from '../models/user.models';
 
 @Component({
   selector: 'app-main-nav',

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 import { Member } from '../../../models/user.models';
 import { Payee, Payment } from '../../../models/payment.models';
@@ -17,14 +18,21 @@ export class PaymentViewComponent implements OnInit {
   @Input() payment: Payment;
   @Output() returnToPayView = new EventEmitter<void>();
   private payeesCollection: AngularFirestoreCollection<SharePayment>;
-  private payeesListObs: Observable<SharePayment[]>;
+  private payeesListObs: Observable<any[]>;
 
   payees: Payee[] = [];
   monthOf: string;
 
   constructor(private afs: AngularFirestore, private router: Router) {
     this.payeesCollection = this.afs.collection<SharePayment>('payees');
-    this.payeesListObs = this.payeesCollection.valueChanges();
+    this.payeesListObs = this.payeesCollection.snapshotChanges()
+      .pipe(map(actions => {
+        return actions.map(action => {
+          const data = action.payload.doc.data();
+          const id = action.payload.doc.id;
+          return { id, ...data};
+        });
+      }));
   }
 
   ngOnInit() {
@@ -57,7 +65,10 @@ export class PaymentViewComponent implements OnInit {
             { paymentMonth: this.payment.month.value,
               createdBy: this.payment.createdBy }});
       } else {
-        console.log('Already added');
+        const shr = this.afs.doc<SharePayment>(`payees/${payeesArr[0].id}`);
+        shr.update(JSON.parse(JSON.stringify(new SharePayment(
+          this.payment.month, payees, this.payment.createdBy
+        ))));
         this.router.navigate(['/share'], { queryParams:
             { paymentMonth: this.payment.month.value,
               createdBy: this.payment.createdBy }});

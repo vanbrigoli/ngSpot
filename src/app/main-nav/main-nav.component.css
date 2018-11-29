@@ -7,10 +7,6 @@ app-navbar {
   z-index: 2;
 }
 
-.container {
-  height: 100%;
-}
-
 .sidenav {
   display: flex;
   align-items: center;
@@ -21,8 +17,18 @@ app-navbar {
 
 .main-container {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   top: 56px;
-  left: 0;
-  right: 0;
   bottom: 0;
+  width: 100%;
+}
+
+.header {
+  flex: 1;
+}
+
+.nav-side {
+  height: 100%;
+  overflow: auto;
 }
