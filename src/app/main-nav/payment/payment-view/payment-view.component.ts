@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable} from 'rxjs';
 
-import { User, Member } from '../../../models/user.models';
+import { Member } from '../../../models/user.models';
 import { Payee, Payment } from '../../../models/payment.models';
 
 @Component({
@@ -17,7 +14,6 @@ export class PaymentViewComponent implements OnInit {
   @Output() returnToPayView = new EventEmitter<void>();
 
   payees: Payee[] = [];
-  showPaymentList = false;
   monthOf: string;
 
   constructor() {

@@ -1,7 +1,3 @@
-export class User {
-  constructor(public firstName: string, public lastName: string, public dateJoined: Date) {}
-}
-
 export class AppUser {
   constructor(public displayName: string, public uid: string, public email: string) {}
 }
