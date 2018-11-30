@@ -1,11 +1,11 @@
 <div class="share-container">
-  <div class="component-header">
+  <div class="component-header animated fadeIn">
     <button class="sidenav-toggle mat-button" mat-button>
       <mat-icon class="animated infinite pulse">favorite</mat-icon>
     </button>
-    <h1>Share</h1>
+    <h1 class="animated fadeInRight">Share</h1>
   </div>
-  <div class="payment-view" *ngIf="!showSpinner">
+  <div class="payment-view animated fadeInUp" *ngIf="!showSpinner">
     <mat-card class="example-card mat-elevation-z6">
       <mat-card-header>
         <mat-card-title *ngIf="monthOf">Payment for the month of {{ monthOf }}</mat-card-title>

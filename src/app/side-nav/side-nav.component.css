@@ -1,0 +1,11 @@
+.mat-icon {
+  margin-right: 15px;
+}
+
+.mat-list-item {
+  cursor: pointer;
+}
+
+a {
+  color: #3f51b5 !important;
+}
