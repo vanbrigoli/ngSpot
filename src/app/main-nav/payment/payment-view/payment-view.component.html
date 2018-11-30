@@ -1,4 +1,4 @@
-<mat-card class="example-card mat-elevation-z6">
+<mat-card class="example-card mat-elevation-z6" *ngIf="false">
   <mat-card-header>
     <mat-card-title>Payment for the month of {{ monthOf }}</mat-card-title>
   </mat-card-header>
@@ -23,3 +23,8 @@
     <a class="action-button" mat-raised-button color="primary" (click)="toPayView()">Create another payment</a>
   </mat-card-actions>
 </mat-card>
+<div class="spinner" *ngIf="true">
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
