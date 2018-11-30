@@ -39,3 +39,11 @@
   width: 30px;
   background-color: #3cba54;
 }
+
+.spread {
+  margin: 15px;
+}
+
+.mat-fab {
+  transition: margin 0.5s;
+}
