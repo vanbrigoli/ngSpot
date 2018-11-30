@@ -16,7 +16,7 @@ const appRoutes: Routes = [
   { path: 'members', component: MainNavComponent, data: {header: 'Members'}, children: [
       { path: '', component: UserContentComponent }
     ], canActivate: [AuthGuard] },
-  { path: 'pay', component: MainNavComponent, data: {header: 'Pay'}, children: [
+  { path: 'pay', component: MainNavComponent, data: {header: 'Payments'}, children: [
       { path: '', component: PaymentComponent }
     ], canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
