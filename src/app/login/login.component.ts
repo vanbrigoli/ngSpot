@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  loggingIn = false;
+
   constructor(private afAuth: AngularFireAuth,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -26,7 +28,10 @@ export class LoginComponent implements OnInit {
   loginGoogle() {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/home';
     localStorage.setItem('returnUrl', returnUrl);
+    this.loggingIn = true;
 
-    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(() => {
+      this.loggingIn = false;
+    });
   }
 }

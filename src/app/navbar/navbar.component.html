@@ -1,4 +1,4 @@
-<nav class="nav-header" *ngIf="!loading">
+<nav class="nav-header">
   <div class="nav">
     <a mat-button [routerLink]="['/home']">Spot</a>
     <a mat-button [routerLink]="['/members']">Members</a>
@@ -8,7 +8,8 @@
     <a mat-button [matMenuTriggerFor]="menu" *ngIf="user">
       {{ user.displayName }} <mat-icon>arrow_drop_down</mat-icon></a>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logoutGoogle()">Logout</button>
+      <button mat-menu-item (click)="logoutGoogle()">
+        <mat-icon>exit_to_app</mat-icon>Logout</button>
     </mat-menu>
   </div>
 </nav>

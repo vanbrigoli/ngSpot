@@ -1,20 +1,13 @@
-<div class="login-container">
-  <div class="login-pads"></div>
-  <div class="login-card">
-    <div class="card-pads"></div>
-    <div class="card-content">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>Login to:</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="sign-ins-container">
-            <button mat-raised-button color="warn" (click)="loginGoogle()">Google</button>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="card-pads"></div>
-  </div>
-  <div class="login-pads"></div>
+<div class="login-container" *ngIf="!loggingIn">
+  <h3 style="color: #3f51b5">Login - -</h3>
+  <button mat-fab color="warn" class="sub-3"></button>
+  <button mat-fab color="warn" class="sub-1"></button>
+  <button mat-fab color="warn" class="sub-2">
+    <mat-icon>lock</mat-icon>
+  </button>
+  <button mat-fab color="warn" class="google-button" (click)="loginGoogle()">Google</button>
+  <button mat-fab color="warn" class="sub-1-1">
+    <mat-icon>lock_open</mat-icon>
+  </button>
 </div>
+<app-spinner [showSpinner]="loggingIn"></app-spinner>

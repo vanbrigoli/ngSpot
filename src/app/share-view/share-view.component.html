@@ -5,10 +5,10 @@
     </button>
     <h1>Share</h1>
   </div>
-  <div class="payment-view">
+  <div class="payment-view" *ngIf="!showSpinner">
     <mat-card class="example-card mat-elevation-z6">
       <mat-card-header>
-        <mat-card-title>Payment for the month of {{ monthOf }}</mat-card-title>
+        <mat-card-title *ngIf="monthOf">Payment for the month of {{ monthOf }}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="payees">
         <mat-list role="list" *ngIf="payees.length > 0; else noPayments">
@@ -28,12 +28,14 @@
         <ng-template #noPayments>
           <div class="nop">
             <p>No payments created for this month.</p>
+            <a class="action-button" mat-raised-button color="primary" routerLink="/home">Home</a>
           </div>
         </ng-template>
       </mat-card-content>
-      <mat-card-actions class="card-action">
+      <mat-card-actions class="card-action" *ngIf="payees.length > 0">
         <a class="action-button" mat-raised-button color="primary" routerLink="/home">Home</a>
       </mat-card-actions>
     </mat-card>
   </div>
+  <app-spinner [showSpinner]="showSpinner"></app-spinner>
 </div>
