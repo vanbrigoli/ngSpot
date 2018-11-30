@@ -5,7 +5,7 @@
     <a mat-button [routerLink]="['/pay']">Payments</a>
   </div>
   <div class="nav">
-    <a mat-button [matMenuTriggerFor]="menu">
+    <a mat-button [matMenuTriggerFor]="menu" *ngIf="user">
       {{ user.displayName }} <mat-icon>arrow_drop_down</mat-icon></a>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="logoutGoogle()">Logout</button>

@@ -61,11 +61,12 @@ import { PaymentListComponent } from './main-nav/payment/payment-list/payment-li
 import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
 import { LoginComponent } from './login/login.component';
 import { ShareViewComponent } from './share-view/share-view.component';
+import { ShareViewService } from './services/share-view.service';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 import { environment as env } from '../environments/environment';
 
 import { AuthGuard } from './services/auth.guard';
-import { ShareViewService } from './services/share-view.service';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { ShareViewService } from './services/share-view.service';
     PaymentListComponent,
     PaymentViewComponent,
     LoginComponent,
-    ShareViewComponent
+    ShareViewComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
