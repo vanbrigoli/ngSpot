@@ -53,7 +53,6 @@ export class PaymentViewComponent implements OnInit {
   }
 
   sharePaymentView() {
-    // TODO: Edit payees if new member added in payment
     this.payeesListObs.subscribe(payees => {
       const payeesArr = payees.filter(payee => {
         return payee.month.value === this.payment.month.value
@@ -65,10 +64,8 @@ export class PaymentViewComponent implements OnInit {
             { paymentMonth: this.payment.month.value,
               createdBy: this.payment.createdBy }});
       } else {
-        const shr = this.afs.doc<SharePayment>(`payees/${payeesArr[0].id}`);
-        shr.update(JSON.parse(JSON.stringify(new SharePayment(
-          this.payment.month, payees, this.payment.createdBy
-        ))));
+        const shr = this.payeesCollection.doc<SharePayment>(payeesArr[0].id);
+        shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) });
         this.router.navigate(['/share'], { queryParams:
             { paymentMonth: this.payment.month.value,
               createdBy: this.payment.createdBy }});
