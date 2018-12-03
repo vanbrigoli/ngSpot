@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 import { Member } from '../../services/members.service';
 import { Payment } from '../../models/payment.models';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-payment',
@@ -28,7 +29,14 @@ export class PaymentComponent implements OnInit {
               private afs: AngularFirestore,
               private afAuth: AngularFireAuth) {
     this.membersCollection = this.afs.collection<Member>('members');
-    this.memberListObs = this.membersCollection.valueChanges();
+    this.memberListObs = this.membersCollection.snapshotChanges()
+      .pipe(map(actions => {
+        return actions.map(action => {
+          const data = action.payload.doc.data();
+          const id = action.payload.doc.id;
+          return { id, ...data };
+        });
+      }));
     this.paymentCollection = this.afs.collection<Payment>('payments');
     this.paymentListObs = this.paymentCollection.valueChanges();
   }

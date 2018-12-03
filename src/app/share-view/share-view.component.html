@@ -19,9 +19,9 @@
             <mat-divider></mat-divider>
           </mat-list-item>
           <mat-list-item role="listitem" *ngFor="let payee of payees">
-            <div class="full-name">{{ payee.fullName }}</div>
+            <div class="full-name">{{ payee.member.firstName + ' ' + payee.member.lastName }}</div>
             <div class="amount">Php. {{ payee.amount }}</div>
-            <div class="paid">{{ payee.paid }}</div>
+            <div class="paid">{{ payee.paid ? 'Paid': 'Not paid' }}</div>
             <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>
@@ -33,7 +33,10 @@
         </ng-template>
       </mat-card-content>
       <mat-card-actions class="card-action" *ngIf="payees.length > 0">
-        <a class="action-button" mat-raised-button color="primary" routerLink="/home">Home</a>
+        <a class="action-button" *ngIf="!user"
+           mat-raised-button color="primary" routerLink="/home">Home</a>
+        <a class="action-button" *ngIf="user"
+           mat-raised-button color="primary" routerLink="/pay">Payment</a>
       </mat-card-actions>
     </mat-card>
   </div>

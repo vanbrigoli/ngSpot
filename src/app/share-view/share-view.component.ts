@@ -5,6 +5,7 @@ import { SharePayment } from '../models/share-view.models';
 import { Observable } from 'rxjs';
 
 import { MONTHS, Payee } from '../models/payment.models';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-share-view',
@@ -19,14 +20,22 @@ export class ShareViewComponent implements OnInit {
   payees: Payee[] = [];
   monthOf;
   showSpinner = false;
+  user;
 
-  constructor(private route: ActivatedRoute, private afs: AngularFirestore) {
+  constructor(private route: ActivatedRoute,
+              private afs: AngularFirestore,
+              private afAuth: AngularFireAuth) {
     this.payeesCollection = this.afs.collection<SharePayment>('payees');
     this.payeesListObs = this.payeesCollection.valueChanges();
   }
 
   ngOnInit() {
     this.showSpinner = true;
+
+    this.afAuth.user.subscribe(user => {
+      this.user = user;
+    });
+
     this.route.queryParams.subscribe(params => {
       const payMonth = +params['paymentMonth'];
       const createdBy = params['createdBy'];

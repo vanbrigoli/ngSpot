@@ -45,8 +45,8 @@ export class UserFormComponent implements OnInit {
       this.editMember = true;
       this.firstName.setValue(member.firstName);
       this.lastName.setValue(member.lastName);
-      this.dateJoined.setValue(member.dateJoined.toDate());
-      this.memberUuid = member.id;
+      this.dateJoined.setValue(member.dateJoined['toDate']());
+      this.memberUuid = member['id'];
     });
   }
 

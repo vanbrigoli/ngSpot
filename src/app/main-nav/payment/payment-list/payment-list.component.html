@@ -7,7 +7,7 @@
       <mat-list-item role="listitem" class="header">
         <div class="month">Month</div>
         <div class="total">Total</div>
-        <div class="resolve">Resolve</div>
+        <div class="resolve">Payment status</div>
         <mat-divider></mat-divider>
       </mat-list-item>
       <mat-list-item role="listitem"
@@ -17,7 +17,7 @@
                      (click)="toPaymentView(payment)">
         <div class="month">{{ payment.month.viewValue }}</div>
         <div class="total">Php. {{ payment.total }}</div>
-        <div class="resolve">{{ payment.resolve }}</div>
+        <div class="resolve">{{ payment.resolve ? 'Fully paid': 'Not paid' }}</div>
         <mat-divider></mat-divider>
       </mat-list-item>
     </mat-list>

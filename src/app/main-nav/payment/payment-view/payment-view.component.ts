@@ -3,10 +3,12 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable} from 'rxjs';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { MatCheckboxChange } from '@angular/material';
 
 import { Member } from '../../../services/members.service';
 import { Payee, Payment } from '../../../models/payment.models';
 import { SharePayment } from '../../../models/share-view.models';
+
 
 @Component({
   selector: 'app-payment-view',
@@ -22,6 +24,7 @@ export class PaymentViewComponent implements OnInit {
 
   payees: Payee[] = [];
   monthOf: string;
+  payeesForPayment;
 
   constructor(private afs: AngularFirestore, private router: Router) {
     this.payeesCollection = this.afs.collection<SharePayment>('payees');
@@ -37,14 +40,23 @@ export class PaymentViewComponent implements OnInit {
 
   ngOnInit() {
     this.monthOf = this.payment.month.viewValue;
-    this.initializePayees(this.members, this.payment.total);
+
+    this.payeesListObs.subscribe(payees => {
+      this.payeesForPayment = payees.filter(payee => {
+        return payee.month.value === this.payment.month.value
+          && payee.userUuid === this.payment.createdBy;
+      });
+      this.payees = this.payeesForPayment[0].payees;
+      if (this.payeesForPayment === 0) {
+        this.initializePayees(this.members, this.payment.total);
+      }
+    });
   }
 
   initializePayees(members: Member[], total) {
     const membersLength = members.length;
-    members.forEach(user => {
-      const fullName = `${user.firstName} ${user.lastName}`;
-      this.payees.push(new Payee(fullName, total / membersLength, false));
+    members.forEach(member => {
+      this.payees.push(new Payee(member, total / membersLength, false));
     });
   }
 
@@ -53,24 +65,30 @@ export class PaymentViewComponent implements OnInit {
   }
 
   sharePaymentView() {
-    this.payeesListObs.subscribe(payees => {
-      const payeesArr = payees.filter(payee => {
-        return payee.month.value === this.payment.month.value
-          && payee.userUuid === this.payment.createdBy;
-      });
-      if (payeesArr.length === 0) {
-        this.addSharePayment();
-        this.router.navigate(['/share'], { queryParams:
-            { paymentMonth: this.payment.month.value,
-              createdBy: this.payment.createdBy }});
-      } else {
-        const shr = this.payeesCollection.doc<SharePayment>(payeesArr[0].id);
-        shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) });
-        this.router.navigate(['/share'], { queryParams:
-            { paymentMonth: this.payment.month.value,
-              createdBy: this.payment.createdBy }});
+    if (this.payeesForPayment.length === 0) {
+      this.addSharePayment();
+      this.router.navigate(['/share'], { queryParams:
+          { paymentMonth: this.payment.month.value,
+            createdBy: this.payment.createdBy }});
+    } else {
+      const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0]['id']);
+      shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) })
+        .then(() => {
+          this.router.navigate(['/share'], { queryParams:
+              { paymentMonth: this.payment.month.value,
+                createdBy: this.payment.createdBy }});
+        });
+    }
+  }
+
+  onChkChange(ev: MatCheckboxChange, memberUuid) {
+    const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0]['id']);
+    this.payees.forEach(payees => {
+      if (payees.member['id'] === memberUuid) {
+        payees.paid = ev.checked;
       }
     });
+    shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) });
   }
 
   private addSharePayment() {
