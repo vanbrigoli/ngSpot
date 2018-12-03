@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,10 +18,13 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.loggingIn = true;
     this.afAuth.user.subscribe(user => {
       if (user) {
         const returnUrl = localStorage.getItem('returnUrl') || '/home';
         this.router.navigateByUrl(returnUrl);
+      } else {
+        this.loggingIn = false;
       }
     });
   }
