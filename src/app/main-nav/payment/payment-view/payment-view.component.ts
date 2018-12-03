@@ -30,7 +30,7 @@ export class PaymentViewComponent implements OnInit {
         return actions.map(action => {
           const data = action.payload.doc.data();
           const id = action.payload.doc.id;
-          return { id, ...data};
+          return { id, ...data };
         });
       }));
   }

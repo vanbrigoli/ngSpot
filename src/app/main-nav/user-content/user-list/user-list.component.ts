@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { Member } from '../../../models/user.models';
 
@@ -9,10 +9,15 @@ import { Member } from '../../../models/user.models';
 })
 export class UserListComponent implements OnInit {
   @Input() members: Member[] = [];
+  @Output() handlDeleteMember = new EventEmitter<string>();
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  deleteMember(memberUuid) {
+    this.handlDeleteMember.emit(memberUuid);
   }
 }

@@ -3,6 +3,6 @@
     <app-user-form [members]="members" [appUser]="appUser"></app-user-form>
   </div>
   <div class="user-list">
-    <app-user-list [members]="members"></app-user-list>
+    <app-user-list [members]="members" (handlDeleteMember)="onDeleteMember($event)"></app-user-list>
   </div>
 </div>
