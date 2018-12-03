@@ -4,8 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
-import { Member } from '../../../models/user.models';
-import { MembersService } from '../../../services/members.service';
+import { MembersService, Member } from '../../../services/members.service';
 
 @Component({
   selector: 'app-user-form',
