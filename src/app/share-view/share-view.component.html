@@ -19,7 +19,7 @@
             <mat-divider></mat-divider>
           </mat-list-item>
           <mat-list-item role="listitem" *ngFor="let payee of payees">
-            <div class="full-name">{{ payee.member.firstName + ' ' + payee.member.lastName }}</div>
+            <div class="full-name">{{ payee.fullName }}</div>
             <div class="amount">Php. {{ payee.amount }}</div>
             <div class="paid">{{ payee.paid ? 'Paid': 'Not paid' }}</div>
             <mat-divider></mat-divider>

@@ -11,10 +11,10 @@
         <mat-divider></mat-divider>
       </mat-list-item>
       <mat-list-item role="listitem" *ngFor="let payee of payees">
-        <div class="full-name">{{ payee.member.firstName + ' ' + payee.member.lastName }}</div>
+        <div class="full-name">{{ payee.fullName }}</div>
         <div class="amount">Php. {{ payee.amount }}</div>
         <div class="paid">
-          <mat-checkbox (change)="onChkChange($event, payee.member['id'])" [checked]="payee.paid">Check me if paid!</mat-checkbox>
+          <mat-checkbox (change)="onChkChange($event, payee.Id)" [checked]="payee.paid">Check me if paid!</mat-checkbox>
         </div>
         <mat-divider></mat-divider>
       </mat-list-item>

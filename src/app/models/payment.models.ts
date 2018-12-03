@@ -1,7 +1,5 @@
-import { Member } from '../services/members.service';
-
 export class Payee {
-  constructor(public member: Member, public amount: number, public paid: boolean) {}
+  constructor(public fullName, public amount: number, public paid: boolean, public Id: string) {}
 }
 
 export class Month {

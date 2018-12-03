@@ -46,9 +46,17 @@ export class PaymentViewComponent implements OnInit {
         return payee.month.value === this.payment.month.value
           && payee.userUuid === this.payment.createdBy;
       });
-      this.payees = this.payeesForPayment[0].payees;
-      if (this.payeesForPayment === 0) {
+      if (this.payeesForPayment.length === 0) {
         this.initializePayees(this.members, this.payment.total);
+      } else {
+        this.payees = this.payeesForPayment[0].payees;
+        if (this.payees.length === 0) {
+          this.initializePayees(this.members, this.payment.total);
+        } else {
+          // TODO: Check if member exists and update
+          // const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0]['id']);
+          // shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) });
+        }
       }
     });
   }
@@ -56,8 +64,11 @@ export class PaymentViewComponent implements OnInit {
   initializePayees(members: Member[], total) {
     const membersLength = members.length;
     members.forEach(member => {
-      this.payees.push(new Payee(member, total / membersLength, false));
+      const fullName = `${member.firstName} ${member.lastName}`;
+      this.payees.push(new Payee(fullName, total / membersLength, false, member['id']));
     });
+    const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0].id);
+    shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) });
   }
 
   toPayView() {
@@ -71,7 +82,7 @@ export class PaymentViewComponent implements OnInit {
           { paymentMonth: this.payment.month.value,
             createdBy: this.payment.createdBy }});
     } else {
-      const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0]['id']);
+      const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0].id);
       shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) })
         .then(() => {
           this.router.navigate(['/share'], { queryParams:
@@ -83,9 +94,9 @@ export class PaymentViewComponent implements OnInit {
 
   onChkChange(ev: MatCheckboxChange, memberUuid) {
     const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0]['id']);
-    this.payees.forEach(payees => {
-      if (payees.member['id'] === memberUuid) {
-        payees.paid = ev.checked;
+    this.payees.forEach(payee => {
+      if (payee.Id === memberUuid) {
+        payee.paid = ev.checked;
       }
     });
     shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) });
