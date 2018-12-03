@@ -85,15 +85,11 @@ export class UserFormComponent implements OnInit {
 
   private addMember() {
     this.membersCollection.add({
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
+      firstName: MembersService.capitalize(this.firstName.value),
+      lastName: MembersService.capitalize(this.lastName.value),
       dateJoined: this.dateJoined.value,
       memberOf: this.appUser.uid
     });
     this.userForm.reset();
-  }
-
-  private capitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 }

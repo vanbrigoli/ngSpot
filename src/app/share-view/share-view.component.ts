@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { SharePayment } from '../models/share-view.models';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { MONTHS, Payee } from '../models/payment.models';
 

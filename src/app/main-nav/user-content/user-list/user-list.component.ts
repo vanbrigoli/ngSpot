@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
-import { Member } from '../../../models/user.models';
-import { MembersService } from '../../../services/members.service';
+import { MembersService, Member } from '../../../services/members.service';
 
 @Component({
   selector: 'app-user-list',

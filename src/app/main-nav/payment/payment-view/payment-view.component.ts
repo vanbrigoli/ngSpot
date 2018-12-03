@@ -4,7 +4,7 @@ import { Observable} from 'rxjs';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
-import { Member } from '../../../models/user.models';
+import { Member } from '../../../services/members.service';
 import { Payee, Payment } from '../../../models/payment.models';
 import { SharePayment } from '../../../models/share-view.models';
 

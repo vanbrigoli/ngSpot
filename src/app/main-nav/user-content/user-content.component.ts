@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 
-import { Member } from '../../models/user.models';
+import { Member } from '../../services/members.service';
 
 
 @Component({

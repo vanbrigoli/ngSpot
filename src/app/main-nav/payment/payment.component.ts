@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import { Member } from '../../models/user.models';
+import { Member } from '../../services/members.service';
 import { Payment } from '../../models/payment.models';
-import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-payment',
