@@ -1,17 +1,17 @@
 <mat-card class="card-container mat-elevation-z8 animated fadeInLeft">
   <mat-card-header>
-    <mat-card-title>Add Member</mat-card-title>
+    <mat-card-title>{{ editMember ? 'Edit Member': 'Add Member'}}</mat-card-title>
   </mat-card-header>
-  <mat-card-content class="card-content">
+  <mat-card-content class="card-content" [formGroup]="userForm">
     <mat-form-field>
-      <input matInput placeholder="First name" [formControl]="firstName" required>
+      <input matInput placeholder="First name" formControlName="firstName" required>
       <mat-error *ngIf="firstName.hasError('required')">
         First name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Last name" [formControl]="lastName" required>
+      <input matInput placeholder="Last name" formControlName="lastName" required>
       <mat-error *ngIf="lastName.hasError('required')">
         Last name is <strong>required</strong>
       </mat-error>
@@ -19,7 +19,7 @@
 
     <mat-form-field>
       <input matInput [matDatepicker]="picker" placeholder="Choose member join date"
-         [formControl]="dateJoined" required>
+             formControlName="dateJoined" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
       <mat-error *ngIf="dateJoined.hasError('matDatepickerParse')">
@@ -28,6 +28,9 @@
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions class="card-action">
-    <button mat-raised-button color="primary" (click)="onAddUser()" [disabled]="!userForm.valid">Add</button>
+    <button mat-raised-button color="primary" *ngIf="!editMember"
+            (click)="onAddUser()" [disabled]="!userForm.valid">Add</button>
+    <button mat-raised-button color="primary" *ngIf="editMember"
+            (click)="onSaveMember()" [disabled]="!userForm.valid">Save</button>
   </mat-card-actions>
 </mat-card>

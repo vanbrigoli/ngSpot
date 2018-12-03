@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { Member } from '../../../models/user.models';
+import { MembersService } from '../../../services/members.service';
 
 @Component({
   selector: 'app-user-list',
@@ -11,7 +12,7 @@ export class UserListComponent implements OnInit {
   @Input() members: Member[] = [];
   @Output() handlDeleteMember = new EventEmitter<string>();
 
-  constructor() {
+  constructor(private membersService: MembersService) {
   }
 
   ngOnInit() {
@@ -19,5 +20,9 @@ export class UserListComponent implements OnInit {
 
   deleteMember(memberUuid) {
     this.handlDeleteMember.emit(memberUuid);
+  }
+
+  editMember(member: Member) {
+    this.membersService.editMemberEvent.next(member);
   }
 }

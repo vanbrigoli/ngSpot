@@ -15,11 +15,12 @@
                      *ngFor="let member of members">
         <div class="first-name">{{ member.firstName }}</div>
         <div class="last-name">{{ member.lastName }}</div>
-        <div class="date-joined">{{ member.dateJoined }}</div>
+        <div class="date-joined">{{ member.dateJoined.toDate() | date: 'medium' }}</div>
         <div class="action">
           <mat-icon style="color: #4885ed;"
                     matTooltipPosition="above"
-                    matTooltip="Edit member">edit</mat-icon>
+                    matTooltip="Edit member"
+                    (click)="editMember(member)">edit</mat-icon>
           <mat-icon style="margin-left: 25px; color: #db3236;"
                     matTooltipPosition="above"
                     matTooltip="Delete member"

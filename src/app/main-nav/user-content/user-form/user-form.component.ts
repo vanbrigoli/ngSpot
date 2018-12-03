@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
 import { Member } from '../../../models/user.models';
+import { MembersService } from '../../../services/members.service';
 
 @Component({
   selector: 'app-user-form',
@@ -21,8 +22,12 @@ export class UserFormComponent implements OnInit {
   firstName: FormControl;
   lastName: FormControl;
   dateJoined: FormControl;
+  editMember = false;
+  memberUuid: string;
 
-  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) {
+  constructor(private afs: AngularFirestore,
+              private snackBar: MatSnackBar,
+              private membersService: MembersService) {
     this.membersCollection = this.afs.collection<Member>('members');
     this.memberListObs = this.membersCollection.valueChanges();
   }
@@ -36,6 +41,14 @@ export class UserFormComponent implements OnInit {
     this.firstName = this.userForm.get('firstName');
     this.lastName = this.userForm.get('lastName');
     this.dateJoined = this.userForm.get('dateJoined');
+
+    this.membersService.editMemberEvent.subscribe(member => {
+      this.editMember = true;
+      this.firstName.setValue(member.firstName);
+      this.lastName.setValue(member.lastName);
+      this.dateJoined.setValue(member.dateJoined.toDate());
+      this.memberUuid = member.id;
+    });
   }
 
   onAddUser() {
@@ -54,12 +67,29 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+  onSaveMember() {
+    this.firstName = this.userForm.get('firstName');
+    this.lastName = this.userForm.get('lastName');
+    this.dateJoined = this.userForm.get('dateJoined');
+
+    const mem = this.membersCollection.doc<Member>(this.memberUuid);
+    mem.update({firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      dateJoined: this.dateJoined.value})
+      .then(success => {
+        this.snackBar.open('Member data updated.', 'Close', { duration: 2000 });
+        this.editMember = false;
+        this.userForm.reset();
+    });
+  }
+
   private addMember() {
-    const newMember = new Member(this.capitalize(this.firstName.value),
-      this.capitalize(this.lastName.value),
-      this.dateJoined.value,
-      this.appUser.uid);
-    this.membersCollection.add(JSON.parse(JSON.stringify(newMember)));
+    this.membersCollection.add({
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      dateJoined: this.dateJoined.value,
+      memberOf: this.appUser.uid
+    });
     this.userForm.reset();
   }
 
