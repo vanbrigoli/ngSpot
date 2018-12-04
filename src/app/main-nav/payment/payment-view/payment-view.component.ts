@@ -54,8 +54,6 @@ export class PaymentViewComponent implements OnInit {
           this.initializePayees(this.members, this.payment.total);
         } else {
           // TODO: Check if member exists and update
-          // const shr = this.payeesCollection.doc<SharePayment>(this.payeesForPayment[0]['id']);
-          // shr.update({ payees: JSON.parse(JSON.stringify(this.payees)) });
         }
       }
     });

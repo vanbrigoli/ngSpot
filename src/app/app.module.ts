@@ -62,11 +62,13 @@ import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-vi
 import { LoginComponent } from './login/login.component';
 import { ShareViewComponent } from './share-view/share-view.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { PaymentMembersComponent } from './main-nav/payment/payment-members/payment-members.component';
 
 import { environment as env } from '../environments/environment';
 
 import { AuthGuard } from './services/auth.guard';
 import { MembersService } from './services/members.service';
+import { PaymentsService } from './services/payments.service';
 
 @NgModule({
   declarations: [
@@ -86,7 +88,8 @@ import { MembersService } from './services/members.service';
     PaymentViewComponent,
     LoginComponent,
     ShareViewComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    PaymentMembersComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +138,7 @@ import { MembersService } from './services/members.service';
     AngularFireAuthModule,
     AppRoutingModule
   ],
-  providers: [AuthGuard, MembersService],
+  providers: [AuthGuard, MembersService, PaymentsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

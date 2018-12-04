@@ -9,7 +9,12 @@
 }
 
 .payment-list {
-  flex: 3;
+  flex: 2;
+}
+
+.payment-members {
+  flex: 1;
+  padding-right: 16px;
 }
 
 .payment-view {

@@ -1,0 +1,21 @@
+<mat-card class="example-card mat-elevation-z6 animated fadeInRight">
+  <mat-card-header>
+    <mat-card-title>Payment Members</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="payments">
+    <mat-list role="list" *ngIf="paymentMembers.length > 0; else noPayment">
+      <mat-list-item role="listitem" *ngFor="let member of paymentMembers">
+        {{ member.firstName + ' ' + member.firstName }}
+        <div style="position: absolute; right: 0; cursor: pointer">
+          <mat-icon color="warn" (click)="remove(member)">remove</mat-icon>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <ng-template #noPayment>
+      <div class="nop">
+        <p>No member added yet.</p>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
