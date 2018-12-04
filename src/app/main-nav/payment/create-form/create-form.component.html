@@ -29,6 +29,9 @@
           {{ member.firstName + ' ' + member.lastName }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="memberOpt.hasError('required')">
+        Member is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
   </mat-card-content>
