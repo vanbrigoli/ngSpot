@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { SharePayment } from '../models/share-view.models';
-import { Observable } from 'rxjs';
-
-import {MONTHS, Payee, Payment} from '../models/payment.models';
 import {AngularFireAuth} from '@angular/fire/auth';
+
+import { Payee, Payment } from '../models/payment.models';
 
 @Component({
   selector: 'app-share-view',

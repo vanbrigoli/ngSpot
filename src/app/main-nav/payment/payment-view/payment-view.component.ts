@@ -1,15 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable} from 'rxjs';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material';
 
-import { Member } from '../../../services/members.service';
-import { Payee, Payment } from '../../../models/payment.models';
-import { SharePayment } from '../../../models/share-view.models';
+import { Payment } from '../../../models/payment.models';
 import {PaymentsService} from '../../../services/payments.service';
-
 
 @Component({
   selector: 'app-payment-view',
