@@ -10,5 +10,5 @@
   </div>
 </div>
 <div class="payment-view" *ngIf="showPaymentView">
-  <app-payment-view [members]="members" [payment]="payment" (returnToPayView)="showPaymentView = false"></app-payment-view>
+  <app-payment-view [payment]="payment" (returnToPayView)="showPaymentView = false"></app-payment-view>
 </div>

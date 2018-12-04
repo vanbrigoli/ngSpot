@@ -10,11 +10,14 @@ export class PaymentsService {
   onPaymentMemberAdd = new Subject<Member>();
   onAddPaymentMembers = new Subject<Member[]>();
   onCreatePayment = new Subject<void>();
-  private membersCollection: AngularFirestoreCollection<Member>;
   private paymentCollection: AngularFirestoreCollection<Payment>;
 
   constructor(private afs: AngularFirestore) {
-    this.membersCollection = this.afs.collection<Member>('members');
     this.paymentCollection = this.afs.collection<Payment>('payments');
+  }
+
+  onEditPaid(payees, paymentId) {
+    const editPayees = this.paymentCollection.doc<Payment>(paymentId);
+    editPayees.update({ payees: JSON.parse(JSON.stringify(payees)) });
   }
 }

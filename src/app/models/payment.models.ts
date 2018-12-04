@@ -1,7 +1,8 @@
-import { Member } from '../services/members.service';
-
 export class Payee {
-  constructor(public fullName, public amount: number, public paid: boolean, public Id: string) {}
+  constructor(public fullName,
+              public amount: number,
+              public paid: boolean,
+              public uuid: string) {}
 }
 
 export class Month {
@@ -13,7 +14,7 @@ export class Payment {
               public total: number,
               public resolve: boolean,
               public createdBy: string,
-              public members: Member[]) {}
+              public payees: Payee[]) {}
 }
 
 export const MONTHS: Month[] = [

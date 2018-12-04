@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { SharePayment } from '../models/share-view.models';
 import { Observable } from 'rxjs';
 
-import { MONTHS, Payee } from '../models/payment.models';
+import {MONTHS, Payee, Payment} from '../models/payment.models';
 import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
@@ -13,10 +13,8 @@ import {AngularFireAuth} from '@angular/fire/auth';
   styleUrls: ['./share-view.component.css']
 })
 export class ShareViewComponent implements OnInit {
-  private payeesCollection: AngularFirestoreCollection<SharePayment>;
-  private payeesListObs: Observable<SharePayment[]>;
+  private paymentsCollection: AngularFirestoreCollection<Payment>;
 
-  sharePayment: SharePayment[] = [];
   payees: Payee[] = [];
   monthOf;
   showSpinner = false;
@@ -25,8 +23,7 @@ export class ShareViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private afs: AngularFirestore,
               private afAuth: AngularFireAuth) {
-    this.payeesCollection = this.afs.collection<SharePayment>('payees');
-    this.payeesListObs = this.payeesCollection.valueChanges();
+    this.paymentsCollection = this.afs.collection<Payment>('payments');
   }
 
   ngOnInit() {
@@ -39,17 +36,17 @@ export class ShareViewComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const payMonth = +params['paymentMonth'];
       const createdBy = params['createdBy'];
-      this.payeesListObs.subscribe(payees => {
-        this.sharePayment = payees.filter(payee => payee.month.value === payMonth
-          && payee.userUuid === createdBy);
-        if (typeof payMonth === 'number' && typeof createdBy === 'string') {
-          this.monthOf = MONTHS[payMonth].viewValue;
-          if (this.sharePayment.length > 0) {
-            this.payees = this.sharePayment[0].payees;
-          }
-        }
-        this.showSpinner = false;
-      });
+      this.paymentsCollection.ref
+        .where('createdBy', '==', createdBy)
+        .where('month.value', '==', payMonth)
+        .get()
+        .then(snapshots => {
+          const data = snapshots.docs.map(doc => {
+            return doc.data();
+          });
+          this.payees = data[0].payees;
+          this.showSpinner = false;
+        });
     });
   }
 }

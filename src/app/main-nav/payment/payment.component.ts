@@ -38,7 +38,14 @@ export class PaymentComponent implements OnInit {
         });
       }));
     this.paymentCollection = this.afs.collection<Payment>('payments');
-    this.paymentListObs = this.paymentCollection.valueChanges();
+    this.paymentListObs = this.paymentCollection.snapshotChanges()
+      .pipe(map(actions => {
+        return actions.map(action => {
+          const data = action.payload.doc.data();
+          const id = action.payload.doc.id;
+          return { id, ...data };
+        });
+      }));
   }
 
   ngOnInit() {

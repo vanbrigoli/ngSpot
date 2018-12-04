@@ -14,7 +14,7 @@
         <div class="full-name">{{ payee.fullName }}</div>
         <div class="amount">Php. {{ payee.amount }}</div>
         <div class="paid">
-          <mat-checkbox (change)="onChkChange($event, payee.Id)" [checked]="payee.paid">Check me if paid!</mat-checkbox>
+          <mat-checkbox (change)="onChkChange($event, payee.uuid)" [checked]="payee.paid">Check me if paid!</mat-checkbox>
         </div>
         <mat-divider></mat-divider>
       </mat-list-item>

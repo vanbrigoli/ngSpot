@@ -5,7 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable} from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
-import { Month, Payment, MONTHS } from '../../../models/payment.models';
+import {Month, Payment, MONTHS, Payee} from '../../../models/payment.models';
 import { Member } from '../../../services/members.service';
 import {PaymentsService} from '../../../services/payments.service';
 
@@ -72,12 +72,19 @@ export class CreateFormComponent implements OnInit {
   }
 
   private addPayment() {
+    const newPayees = this.paymentMembers.map(pMembers => {
+      const fullName = `${pMembers.firstName} ${pMembers.lastName}`
+      return new Payee(fullName,
+        this.total.value / this.paymentMembers.length,
+        false,
+        pMembers.id);
+    });
     const newPayment = new Payment(
       new Month(this.month.value, MONTHS[this.month.value].viewValue),
       this.total.value,
       false,
       this.appUser.uid,
-      this.paymentMembers);
+      newPayees);
     this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
     this.createForm.reset();
   }
