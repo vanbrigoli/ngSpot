@@ -10,6 +10,7 @@ export class PaymentsService {
   onPaymentMemberAdd = new Subject<Member>();
   onAddPaymentMembers = new Subject<Member[]>();
   onCreatePayment = new Subject<void>();
+  onUserExists = new Subject<void>();
   private paymentCollection: AngularFirestoreCollection<Payment>;
 
   constructor(private afs: AngularFirestore) {

@@ -15,7 +15,14 @@ export class PaymentMembersComponent implements OnInit {
 
   ngOnInit() {
     this.paymentService.onPaymentMemberAdd.subscribe(member => {
-      this.paymentMembers.push(member);
+      const found = this.paymentMembers.find(paymentMember =>
+        paymentMember.firstName === member.firstName && paymentMember.lastName === member.lastName)
+
+      if (!!found) {
+        this.paymentService.onUserExists.next();
+      } else {
+        this.paymentMembers.push(member);
+      }
     });
 
     this.paymentService.onCreatePayment.subscribe(_ => {

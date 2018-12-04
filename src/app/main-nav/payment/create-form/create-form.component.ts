@@ -51,6 +51,10 @@ export class CreateFormComponent implements OnInit {
     this.paymentService.onAddPaymentMembers.subscribe(members => {
       this.paymentMembers = members;
     });
+
+    this.paymentService.onUserExists.subscribe(_ => {
+      this.snackBar.open('User already added.', 'Close', { duration: 2000 });
+    });
   }
 
   onCreateForm() {
