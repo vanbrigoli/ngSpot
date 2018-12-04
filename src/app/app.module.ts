@@ -49,10 +49,10 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
-import { UserContentComponent } from './main-nav/user-content/user-content.component';
+import { MemberContentComponent } from './main-nav/user-content/member-content.component';
 import { HeaderComponent } from './main-nav/header/header.component';
-import { UserFormComponent } from './main-nav/user-content/user-form/user-form.component';
-import { UserListComponent } from './main-nav/user-content/user-list/user-list.component';
+import { MemberFormComponent } from './main-nav/user-content/member-form/member-form.component';
+import { MemberListComponent } from './main-nav/user-content/member-list/member-list.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
@@ -76,10 +76,10 @@ import { PaymentsService } from './services/payments.service';
     MainNavComponent,
     NavbarComponent,
     SideNavComponent,
-    UserContentComponent,
+    MemberContentComponent,
     HeaderComponent,
-    UserFormComponent,
-    UserListComponent,
+    MemberFormComponent,
+    MemberListComponent,
     HomeComponent,
     FooterComponent,
     PaymentComponent,

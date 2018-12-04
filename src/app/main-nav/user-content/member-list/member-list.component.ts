@@ -4,10 +4,10 @@ import { MembersService, Member } from '../../../services/members.service';
 
 @Component({
   selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  templateUrl: './member-list.component.html',
+  styleUrls: ['./member-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class MemberListComponent implements OnInit {
   @Input() members: Member[] = [];
   @Output() handlDeleteMember = new EventEmitter<string>();
 

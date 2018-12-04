@@ -8,10 +8,10 @@ import { MembersService, Member } from '../../../services/members.service';
 
 @Component({
   selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css']
+  templateUrl: './member-form.component.html',
+  styleUrls: ['./member-form.component.css']
 })
-export class UserFormComponent implements OnInit {
+export class MemberFormComponent implements OnInit {
   @Input() members: Member[] = [];
   @Input() appUser;
   private membersCollection: AngularFirestoreCollection<Member>;

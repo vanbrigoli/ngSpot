@@ -9,10 +9,10 @@ import { Member } from '../../services/members.service';
 
 @Component({
   selector: 'app-content',
-  templateUrl: './user-content.component.html',
-  styleUrls: ['./user-content.component.css']
+  templateUrl: './member-content.component.html',
+  styleUrls: ['./member-content.component.css']
 })
-export class UserContentComponent implements OnInit {
+export class MemberContentComponent implements OnInit {
   private membersCollection: AngularFirestoreCollection<Member>;
   private memberListObs: Observable<Member[]>;
 
