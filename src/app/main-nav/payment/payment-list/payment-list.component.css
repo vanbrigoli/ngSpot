@@ -4,6 +4,9 @@ mat-list {
 
 .payments {
   display: flex;
+}
+
+button {
   cursor: pointer;
 }
 

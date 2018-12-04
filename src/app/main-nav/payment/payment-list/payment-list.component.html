@@ -11,13 +11,21 @@
         <mat-divider></mat-divider>
       </mat-list-item>
       <mat-list-item role="listitem"
-                     *ngFor="let payment of payments"
-                     [matTooltip]="changeTooltipMsg(payment)"
-                     matTooltipPosition="above"
-                     (click)="toPaymentView(payment)">
-        <div class="month">{{ payment.month.viewValue }}</div>
+                     *ngFor="let payment of payments">
+        <div class="month">
+          <button mat-icon-button
+                  [matTooltip]="changeTooltipMsg(payment)"
+                  matTooltipPosition="above"
+                  (click)="toPaymentView(payment)">
+            <mat-icon color="accent">near_me</mat-icon>
+          </button>
+          <span>{{ payment.month.viewValue }}</span>
+        </div>
         <div class="total">Php. {{ payment.total }}</div>
         <div class="resolve">{{ payment.resolve ? 'Fully paid': 'Not paid' }}</div>
+        <div style="position: absolute; right: 0; cursor: pointer; margin-right: 15px" *ngIf="payment.resolve">
+          <mat-icon color="warn" (click)="deletePayment(payment['id'])">delete_forever</mat-icon>
+        </div>
         <mat-divider></mat-divider>
       </mat-list-item>
     </mat-list>

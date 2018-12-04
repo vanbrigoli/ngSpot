@@ -19,6 +19,18 @@ export class PaymentsService {
 
   onEditPaid(payees, paymentId) {
     const editPayees = this.paymentCollection.doc<Payment>(paymentId);
-    editPayees.update({ payees: JSON.parse(JSON.stringify(payees)) });
+    let fullPaid = true;
+    for (const payee of payees) {
+      if (payee.paid !== true) {
+        fullPaid = false;
+        break;
+      }
+    }
+    editPayees.update({ payees: JSON.parse(JSON.stringify(payees)), resolve: fullPaid });
+  }
+
+  onDeletePayment(paymentId) {
+    const deletePayment = this.paymentCollection.doc<Payment>(paymentId);
+    deletePayment.delete();
   }
 }
