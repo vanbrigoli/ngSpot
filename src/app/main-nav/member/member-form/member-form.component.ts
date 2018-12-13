@@ -78,7 +78,8 @@ export class MemberFormComponent implements OnInit {
       .then(success => {
         this.snackBar.open('Member data updated.', 'Close', { duration: 2000 });
         this.editMember = false;
-        this.userForm.reset();
+        this.userForm.controls['firstName'].reset();
+        this.userForm.controls['lastName'].reset();
     });
   }
 
@@ -89,6 +90,7 @@ export class MemberFormComponent implements OnInit {
       dateJoined: this.dateJoined.value,
       memberOf: this.appUser.uid
     });
-    this.userForm.reset();
+    this.userForm.controls['firstName'].reset();
+    this.userForm.controls['lastName'].reset();
   }
 }
