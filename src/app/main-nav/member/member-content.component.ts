@@ -3,9 +3,9 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 import { Member } from '../../services/members.service';
-
 
 @Component({
   selector: 'app-content',
@@ -19,7 +19,9 @@ export class MemberContentComponent implements OnInit {
   members: Member[] = [];
   appUser;
 
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {
+  constructor(private afs: AngularFirestore,
+              private afAuth: AngularFireAuth,
+              private snackBar: MatSnackBar,) {
     this.membersCollection = this.afs.collection<Member>('members');
     this.memberListObs = this.membersCollection.snapshotChanges()
       .pipe(map(actions => {
@@ -43,6 +45,8 @@ export class MemberContentComponent implements OnInit {
 
   onDeleteMember(ev) {
     const mem = this.membersCollection.doc<Member>(ev);
-    mem.delete();
+    mem.delete().then(() => {
+      this.snackBar.open('Member deleted.', 'Close', { duration: 2000 });
+    });
   }
 }
