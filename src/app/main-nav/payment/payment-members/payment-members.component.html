@@ -5,7 +5,7 @@
   <mat-card-content class="payments">
     <mat-list role="list" *ngIf="paymentMembers.length > 0; else noPayment">
       <mat-list-item role="listitem" *ngFor="let member of paymentMembers">
-        {{ member.firstName + ' ' + member.firstName }}
+        {{ member.firstName + ' ' + member.lastName }}
         <div style="position: absolute; right: 0; cursor: pointer">
           <mat-icon color="warn" (click)="remove(member)">remove</mat-icon>
         </div>

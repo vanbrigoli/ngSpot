@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import {AngularFireAuth} from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import { Payee, Payment } from '../models/payment.models';
+import { Payee, Payment, MONTHS } from '../models/payment.models';
 
 @Component({
   selector: 'app-share-view',
@@ -43,6 +43,7 @@ export class ShareViewComponent implements OnInit {
             return doc.data();
           });
           this.payees = data[0].payees;
+          this.monthOf = MONTHS[payMonth].viewValue;
           this.showSpinner = false;
         });
     });
