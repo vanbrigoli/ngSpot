@@ -42,7 +42,6 @@ export class MainNavComponent implements OnInit {
         const usr = appUsers.filter((appUser: AppUser) => {
           return appUser.uid === user.uid;
         });
-        console.log(usr);
         if (usr === undefined || usr.length === 0) {
           this.appUsersCollection.add(JSON.parse(JSON.stringify(
             new AppUser(user.displayName, user.uid, user.email))
