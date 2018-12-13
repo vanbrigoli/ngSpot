@@ -7,7 +7,7 @@ import { Payment } from '../models/payment.models';
 
 @Injectable()
 export class PaymentsService {
-  onPaymentMemberAdd = new Subject<Member>();
+  onAddMember = new Subject<Member>();
   onAddPaymentMembers = new Subject<Member[]>();
   onCreatePayment = new Subject<void>();
   onUserExists = new Subject<void>();

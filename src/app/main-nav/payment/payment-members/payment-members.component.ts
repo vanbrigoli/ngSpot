@@ -14,7 +14,7 @@ export class PaymentMembersComponent implements OnInit {
   constructor(private paymentService: PaymentsService) { }
 
   ngOnInit() {
-    this.paymentService.onPaymentMemberAdd.subscribe(member => {
+    this.paymentService.onAddMember.subscribe(member => {
       const found = this.paymentMembers.find(paymentMember =>
         paymentMember.firstName === member.firstName && paymentMember.lastName === member.lastName)
 
@@ -35,6 +35,7 @@ export class PaymentMembersComponent implements OnInit {
     const index = this.paymentMembers.indexOf(member);
     if (index > -1) {
       this.paymentMembers.splice(index);
+      this.paymentService.onAddPaymentMembers.next(this.paymentMembers);
     }
   }
 }

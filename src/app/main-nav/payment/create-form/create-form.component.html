@@ -36,6 +36,7 @@
 
   </mat-card-content>
   <mat-card-actions class="card-action">
-    <button mat-raised-button color="primary" (click)="onCreateForm()" [disabled]="!createForm.valid">Create</button>
+    <button mat-raised-button color="primary" (click)="onCreateForm()"
+            [disabled]="!createForm.valid || buttonEnabled">Create</button>
   </mat-card-actions>
 </mat-card>
