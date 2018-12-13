@@ -35,7 +35,7 @@ export class MemberFormComponent implements OnInit {
     this.userForm = new FormGroup({
       'firstName': new FormControl('', [Validators.required]),
       'lastName': new FormControl('', [Validators.required]),
-      'dateJoined': new FormControl({value: ''}, [Validators.required])
+      'dateJoined': new FormControl({value: new Date(), disabled: true})
     });
     this.firstName = this.userForm.get('firstName');
     this.lastName = this.userForm.get('lastName');

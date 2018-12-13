@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { HomeComponent } from './home/home.component';
-import { MemberContentComponent } from './main-nav/user-content/member-content.component';
+import { MemberContentComponent } from './main-nav/member/member-content.component';
 import { PaymentComponent } from './main-nav/payment/payment.component';
 import { LoginComponent } from './login/login.component';
 import { ShareViewComponent } from './share-view/share-view.component';
