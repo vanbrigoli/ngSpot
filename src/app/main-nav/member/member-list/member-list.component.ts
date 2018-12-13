@@ -13,7 +13,7 @@ export class MemberListComponent implements OnInit {
   @Input() members: Member[] = [];
   @Output() handlDeleteMember = new EventEmitter<string>();
 
-  constructor(private membersService: MembersService, public dialog: MatDialog) {
+  constructor(private membersService: MembersService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class MemberListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.handlDeleteMember.emit(member.id);
+        this.handlDeleteMember.emit(result);
       }
     });
   }

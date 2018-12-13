@@ -18,6 +18,11 @@ export class DialogComponent {
         data: `${data.firstName} ${data.lastName}`,
         id: data.id
       };
+    } else {
+      this.ins = {
+        data: `${data.month.viewValue}`,
+        id: data.id
+      };
     }
   }
 

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { Payment } from '../../../models/payment.models';
 import { PaymentsService } from '../../../services/payments.service';
+import {DialogComponent} from '../../../shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-payment-list',
@@ -12,7 +14,7 @@ export class PaymentListComponent implements OnInit {
   @Input() payments: Payment[] = [];
   @Output() showPaymentView = new EventEmitter<Payment>();
 
-  constructor(private paymentService: PaymentsService) {
+  constructor(private paymentService: PaymentsService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -26,7 +28,16 @@ export class PaymentListComponent implements OnInit {
     return `Go to payment view for ${payment.month.viewValue}`;
   }
 
-  deletePayment(uuid) {
-    this.paymentService.onDeletePayment(uuid);
+  deletePayment(payment) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '300px',
+      data: payment
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.paymentService.onDeletePayment(result);
+      }
+    });
   }
 }
