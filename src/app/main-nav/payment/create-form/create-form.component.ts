@@ -28,7 +28,7 @@ export class CreateFormComponent implements OnInit {
   months: Month[] = MONTHS;
   memberOpt: FormControl;
   paymentMembers = [];
-  buttonEnabled = true;
+  buttonDisabled = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -51,7 +51,7 @@ export class CreateFormComponent implements OnInit {
 
     this.paymentService.onAddPaymentMembers.subscribe(members => {
       this.paymentMembers = members;
-      this.buttonEnabled = this.paymentMembers.length === 0;
+      this.buttonDisabled = this.paymentMembers.length === 0;
     });
 
     this.paymentService.onUserExists.subscribe(_ => {
@@ -74,7 +74,7 @@ export class CreateFormComponent implements OnInit {
   }
 
   onChange(member) {
-    this.buttonEnabled = false;
+    this.buttonDisabled = false;
     this.paymentService.onAddMember.next(member);
   }
 
