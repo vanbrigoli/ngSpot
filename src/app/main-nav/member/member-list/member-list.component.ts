@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { MembersService, Member } from '../../../services/members.service';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -11,14 +13,23 @@ export class MemberListComponent implements OnInit {
   @Input() members: Member[] = [];
   @Output() handlDeleteMember = new EventEmitter<string>();
 
-  constructor(private membersService: MembersService) {
+  constructor(private membersService: MembersService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
   }
 
-  deleteMember(memberUuid) {
-    this.handlDeleteMember.emit(memberUuid);
+  deleteMember(member) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '300px',
+      data: member
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.handlDeleteMember.emit(member.id);
+      }
+    });
   }
 
   editMember(member: Member) {

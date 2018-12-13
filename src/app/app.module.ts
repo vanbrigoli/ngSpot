@@ -61,8 +61,10 @@ import { PaymentListComponent } from './main-nav/payment/payment-list/payment-li
 import { PaymentViewComponent } from './main-nav/payment/payment-view/payment-view.component';
 import { LoginComponent } from './login/login.component';
 import { ShareViewComponent } from './share-view/share-view.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { PaymentMembersComponent } from './main-nav/payment/payment-members/payment-members.component';
+
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { DialogComponent } from './shared/dialog/dialog.component';
 
 import { environment as env } from '../environments/environment';
 
@@ -89,7 +91,8 @@ import { PaymentsService } from './services/payments.service';
     LoginComponent,
     ShareViewComponent,
     SpinnerComponent,
-    PaymentMembersComponent
+    PaymentMembersComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -137,6 +140,9 @@ import { PaymentsService } from './services/payments.service';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     AppRoutingModule
+  ],
+  entryComponents: [
+    DialogComponent
   ],
   providers: [AuthGuard, MembersService, PaymentsService],
   bootstrap: [AppComponent]
