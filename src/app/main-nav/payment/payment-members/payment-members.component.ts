@@ -27,9 +27,11 @@ export class PaymentMembersComponent implements OnInit {
   }
 
   remove(member) {
+    console.log(member);
     const index = this.paymentMembers.indexOf(member);
+    console.log(index);
     if (index > -1) {
-      this.paymentMembers.splice(index);
+      this.paymentMembers.splice(index, 1);
       this.paymentService.onAddPaymentMembers.next(this.paymentMembers);
     }
   }
