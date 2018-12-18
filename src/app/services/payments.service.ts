@@ -31,6 +31,6 @@ export class PaymentsService {
 
   onDeletePayment(paymentId) {
     const deletePayment = this.paymentCollection.doc<Payment>(paymentId);
-    deletePayment.delete();
+    return deletePayment.delete();
   }
 }

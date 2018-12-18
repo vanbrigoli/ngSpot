@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { Payment } from '../../../models/payment.models';
 import { PaymentsService } from '../../../services/payments.service';
-import {DialogComponent} from '../../../shared/dialog/dialog.component';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-payment-list',
@@ -14,7 +14,9 @@ export class PaymentListComponent implements OnInit {
   @Input() payments: Payment[] = [];
   @Output() showPaymentView = new EventEmitter<Payment>();
 
-  constructor(private paymentService: PaymentsService, private dialog: MatDialog) {
+  constructor(private paymentService: PaymentsService,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -36,7 +38,9 @@ export class PaymentListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.paymentService.onDeletePayment(result);
+        this.paymentService.onDeletePayment(result).then(_ => {
+          this.snackBar.open('Payment deleted.', 'Close', { duration: 2000 });
+        });
       }
     });
   }
