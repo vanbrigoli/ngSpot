@@ -24,11 +24,6 @@ export class PaymentMembersComponent implements OnInit {
         this.paymentMembers.push(member);
       }
     });
-
-    this.paymentService.onCreatePayment.subscribe(_ => {
-      this.paymentService.onAddPaymentMembers.next(this.paymentMembers);
-      this.paymentMembers = [];
-    });
   }
 
   remove(member) {

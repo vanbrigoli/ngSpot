@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 import { Member } from '../../services/members.service';
-import { Payment } from '../../models/payment.models';
+import { Month, MONTHS, Payee, Payment } from '../../models/payment.models';
 import { PaymentsService } from '../../services/payments.service';
+import { PaymentMembersComponent } from './payment-members/payment-members.component';
 
 @Component({
   selector: 'app-payment',
@@ -20,6 +22,9 @@ export class PaymentComponent implements OnInit {
   private paymentCollection: AngularFirestoreCollection<Payment>;
   private paymentListObs: Observable<Payment[]>;
 
+  @ViewChild(PaymentMembersComponent)
+  paymentMembersComponent: PaymentMembersComponent;
+
   showPaymentView = false;
   payment: Payment;
   appUser;
@@ -30,7 +35,8 @@ export class PaymentComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private afs: AngularFirestore,
               private afAuth: AngularFireAuth,
-              private paymentsService: PaymentsService) {
+              private paymentsService: PaymentsService,
+              private snackBar: MatSnackBar) {
     this.membersCollection = this.afs.collection<Member>('members');
     this.memberListObs = this.membersCollection.snapshotChanges()
       .pipe(map(actions => {
@@ -71,6 +77,27 @@ export class PaymentComponent implements OnInit {
       .subscribe((payments: Payment[]) => {
         this.payments = payments;
       });
+
+    this.paymentsService.onCreatePayment.subscribe(({month, total}) => {
+      this.hasPaymentMembers = false;
+      const paymentMembers = this.paymentMembersComponent.paymentMembers;
+      const newPayees = paymentMembers.map(pMembers => {
+        const fullName = `${pMembers.firstName} ${pMembers.lastName}`;
+        return new Payee(fullName,
+          total / paymentMembers.length,
+          false,
+          pMembers['id']);
+      });
+      const newPayment = new Payment(
+        new Month(month.value, MONTHS[month.value].viewValue),
+        total,
+        false,
+        this.appUser.uid,
+        newPayees);
+      this.paymentsService.onAddPayment(newPayment).then(_ => {
+        this.snackBar.open('Payment added.', 'Close', { duration: 2000 });
+      });
+    });
 
     this.paymentsService.onAddMember.subscribe(_ => {
       this.hasPaymentMembers = true;

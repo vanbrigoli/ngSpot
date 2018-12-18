@@ -5,7 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable} from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
-import { Month, Payment, MONTHS, Payee } from '../../../models/payment.models';
+import { Month, Payment, MONTHS } from '../../../models/payment.models';
 import { Member } from '../../../services/members.service';
 import { PaymentsService } from '../../../services/payments.service';
 
@@ -60,39 +60,17 @@ export class CreateFormComponent implements OnInit {
   }
 
   onCreateForm() {
-    this.paymentService.onCreatePayment.next();
-    if (this.payments.length === 0) {
-      this.addPayment();
+    const paymentArr = this.payments.filter(payment => payment.month.value === this.month.value);
+    if (paymentArr.length === 0) {
+      this.paymentService.onCreatePayment.next({ month: this.month, total: this.total.value});
+      this.createForm.reset();
     } else {
-      const paymentArr = this.payments.filter(payment => payment.month.value === this.month.value);
-      if (paymentArr.length === 0) {
-        this.addPayment();
-      } else {
-        this.snackBar.open('Payment already exists.', 'Close', { duration: 2000 });
-      }
+      this.snackBar.open('Payment already exists.', 'Close', { duration: 2000 });
     }
   }
 
   onChange(member) {
     this.buttonDisabled = false;
     this.paymentService.onAddMember.next(member);
-  }
-
-  private addPayment() {
-    const newPayees = this.paymentMembers.map(pMembers => {
-      const fullName = `${pMembers.firstName} ${pMembers.lastName}`
-      return new Payee(fullName,
-        this.total.value / this.paymentMembers.length,
-        false,
-        pMembers.id);
-    });
-    const newPayment = new Payment(
-      new Month(this.month.value, MONTHS[this.month.value].viewValue),
-      this.total.value,
-      false,
-      this.appUser.uid,
-      newPayees);
-    this.paymentCollection.add(JSON.parse(JSON.stringify(newPayment)));
-    this.createForm.reset();
   }
 }
