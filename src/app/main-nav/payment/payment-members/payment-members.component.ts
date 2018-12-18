@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Member } from '../../../services/members.service';
-import {PaymentsService} from '../../../services/payments.service';
+import { PaymentsService } from '../../../services/payments.service';
 
 @Component({
   selector: 'app-payment-members',

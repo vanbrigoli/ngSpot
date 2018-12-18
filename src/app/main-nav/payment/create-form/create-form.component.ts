@@ -5,9 +5,9 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable} from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
-import {Month, Payment, MONTHS, Payee} from '../../../models/payment.models';
+import { Month, Payment, MONTHS, Payee } from '../../../models/payment.models';
 import { Member } from '../../../services/members.service';
-import {PaymentsService} from '../../../services/payments.service';
+import { PaymentsService } from '../../../services/payments.service';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class CreateFormComponent implements OnInit {
     });
 
     this.paymentService.onUserExists.subscribe(_ => {
-      this.snackBar.open('User already added.', 'Close', { duration: 2000 });
+      this.snackBar.open('Member already added.', 'Close', { duration: 2000 });
     });
   }
 
