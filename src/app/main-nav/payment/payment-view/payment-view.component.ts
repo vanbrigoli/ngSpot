@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MatCheckboxChange } from '@angular/material';
 
 import { Payment } from '../../../models/payment.models';
-import {PaymentsService} from '../../../services/payments.service';
+import { PaymentsService } from '../../../services/payments.service';
 
 @Component({
   selector: 'app-payment-view',

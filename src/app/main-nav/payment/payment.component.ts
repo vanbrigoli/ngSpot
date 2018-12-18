@@ -31,6 +31,7 @@ export class PaymentComponent implements OnInit {
   members: Member[] = [];
   payments: Payment[] = [];
   hasPaymentMembers = false;
+  showSpinner = false;
 
   constructor(private route: ActivatedRoute,
               private afs: AngularFirestore,
@@ -94,8 +95,15 @@ export class PaymentComponent implements OnInit {
         false,
         this.appUser.uid,
         newPayees);
-      this.paymentsService.onAddPayment(newPayment).then(_ => {
+      this.showSpinner = true;
+      this.paymentsService.onAddPayment(newPayment).then(data => {
         this.snackBar.open('Payment added.', 'Close', { duration: 2000 });
+        data.get().then((s: any) => {
+          this.payment = s.data();
+          this.payment['id'] = s.id;
+          this.showSpinner = false;
+          this.showPaymentView = true;
+        });
       });
     });
 
