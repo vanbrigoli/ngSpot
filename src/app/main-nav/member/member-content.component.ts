@@ -21,7 +21,7 @@ export class MemberContentComponent implements OnInit {
 
   constructor(private afs: AngularFirestore,
               private afAuth: AngularFireAuth,
-              private snackBar: MatSnackBar,) {
+              private snackBar: MatSnackBar) {
     this.membersCollection = this.afs.collection<Member>('members');
     this.memberListObs = this.membersCollection.snapshotChanges()
       .pipe(map(actions => {
@@ -38,8 +38,11 @@ export class MemberContentComponent implements OnInit {
       this.appUser = user;
     });
 
-    this.memberListObs.subscribe((members: Member[]) => {
-      this.members = members.filter(member => member.memberOf === this.appUser.uid);
+    this.memberListObs
+      .pipe(
+        map(members => members.filter(member => member.memberOf === this.appUser.uid)))
+      .subscribe((members: Member[]) => {
+      this.members = members;
     });
   }
 
