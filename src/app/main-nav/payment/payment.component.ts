@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { map } from 'rxjs/operators';
 
 import { Member } from '../../services/members.service';
 import { Payment } from '../../models/payment.models';
-import {map} from 'rxjs/operators';
+import { PaymentsService } from '../../services/payments.service';
 
 @Component({
   selector: 'app-payment',
@@ -24,10 +25,12 @@ export class PaymentComponent implements OnInit {
   appUser;
   members: Member[] = [];
   payments: Payment[] = [];
+  hasPaymentMembers = false;
 
   constructor(private route: ActivatedRoute,
               private afs: AngularFirestore,
-              private afAuth: AngularFireAuth) {
+              private afAuth: AngularFireAuth,
+              private paymentsService: PaymentsService) {
     this.membersCollection = this.afs.collection<Member>('members');
     this.memberListObs = this.membersCollection.snapshotChanges()
       .pipe(map(actions => {
@@ -68,6 +71,14 @@ export class PaymentComponent implements OnInit {
       .subscribe((payments: Payment[]) => {
         this.payments = payments;
       });
+
+    this.paymentsService.onAddMember.subscribe(_ => {
+      this.hasPaymentMembers = true;
+    });
+
+    this.paymentsService.onAddPaymentMembers.subscribe(members => {
+      this.hasPaymentMembers = members.length > 0;
+    });
   }
 
   handleReturnPayment(payment: Payment) {

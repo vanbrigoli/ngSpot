@@ -2,7 +2,7 @@
   <div class="create-form">
     <app-create-form [members]="members" [payments]="payments" [appUser]="appUser"></app-create-form>
   </div>
-  <div class="payment-members">
+  <div class="payment-members" [hidden]="!hasPaymentMembers">
     <app-payment-members></app-payment-members>
   </div>
   <div class="payment-list">
