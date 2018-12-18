@@ -53,13 +53,21 @@ export class PaymentComponent implements OnInit {
       this.appUser = user;
     });
 
-    this.memberListObs.subscribe((members: Member[]) => {
-      this.members = members.filter(member => member.memberOf === this.appUser.uid);
-    });
+    this.memberListObs
+      .pipe(
+        map(members => members.filter(member => member.memberOf === this.appUser.uid)))
+      .subscribe((members: Member[]) => {
+        this.members = members;
+      });
 
-    this.paymentListObs.subscribe((payments: Payment[]) => {
-      this.payments = payments.filter(payment => payment.createdBy === this.appUser.uid);
-    });
+    this.paymentListObs
+      .pipe(
+        map(payments =>
+          payments.filter(member => member.createdBy === this.appUser.uid)
+            .sort((pay1, pay2) => pay1.month.value > pay2.month.value ? 1 : -1)))
+      .subscribe((payments: Payment[]) => {
+        this.payments = payments;
+      });
   }
 
   handleReturnPayment(payment: Payment) {
