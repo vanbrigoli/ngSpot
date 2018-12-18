@@ -29,5 +29,6 @@
             (click)="onAddUser()" [disabled]="!userForm.valid">Add</button>
     <button mat-raised-button color="primary" *ngIf="editMember"
             (click)="onSaveMember()" [disabled]="!userForm.valid">Save</button>
+    <button mat-raised-button color="primary" *ngIf="editMember" (click)="onCancel()">Cancel</button>
   </mat-card-actions>
 </mat-card>

@@ -83,6 +83,12 @@ export class MemberFormComponent implements OnInit {
     });
   }
 
+  onCancel() {
+    this.editMember = false;
+    this.userForm.controls['firstName'].reset();
+    this.userForm.controls['lastName'].reset();
+  }
+
   private addMember() {
     this.membersCollection.add({
       firstName: MembersService.capitalize(this.firstName.value),
